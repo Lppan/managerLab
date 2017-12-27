@@ -10,13 +10,12 @@
     采用mybatis的自动代理设置，将mapper文件和xml文件同名同包下，并在sqlMap.xml（mybatis-config.xml）中配置mapper自动注册扫描包
 
     -->
-    <typeAliases >
+    <typeAliases>
             <typeAlias type="com.laboratory.system.user.model.User" alias="userModel"></typeAlias>
             <typeAlias type="com.laboratory.system.resource.model.Resources" alias="resourcesModel"></typeAlias>
             <typeAlias type="com.laboratory.system.role.model.Role" alias="roleModel"></typeAlias>
             <typeAlias type="com.laboratory.system.role.model.RoleResource" alias="roleResourceModel"></typeAlias>
             <typeAlias type="com.laboratory.system.role.model.UserRole" alias="userRoleModel"></typeAlias>
-
     </typeAliases>
 
     <!--<mappers>-->
