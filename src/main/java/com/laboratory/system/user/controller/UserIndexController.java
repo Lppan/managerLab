@@ -1,19 +1,15 @@
 package com.laboratory.system.user.controller;
-import com.alibaba.fastjson.JSONObject;
 import com.laboratory.labport.model.ResponseModel;
 import com.laboratory.system.user.model.User;
 import com.laboratory.system.user.service.UserService;
+import com.laboratory.utils.BaseControllerRequest;
 import com.laboratory.utils.LabConstant;
 import com.laboratory.utils.MD5Utils;
-import com.laboratory.utils.MapUtils;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,17 +38,16 @@ public class UserIndexController {
     @ResponseBody
     public String login(HttpServletRequest request){
         ResponseModel responseModel = new ResponseModel();
-        Map<String, String> mapParams = MapUtils.getMapParams(request);
-        boolean flag = MapUtils.isEmptyS(mapParams);
-        //map 不为空
-        if(flag){
+        net.sf.json.JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
+        Map<String,Object> paramMap = net.sf.json.JSONObject.fromObject(jsonParams);
+        if (null != paramMap && paramMap.containsKey("userName") && paramMap.containsKey("password")){
             //根据用户名查询是否有该用户
-            String username = mapParams.get("userName");
-            String password = mapParams.get("password");
+            String username = paramMap.get("userName").toString();
+            String password = paramMap.get("password").toString();
             logger.info("登录用户名："+username+"登录密码："+password);
             if(null != username &&  !"".equals(username) && null != password && !"".equals(password)){
                 try{
-                    List<User> users = userService.selectUserByUserName(mapParams);
+                    List<User> users = userService.selectUserByUserName(paramMap);
                 if(null != users && users.size() > 0){
                     User user = users.get(0);
                     if(user.getPassword().equals(MD5Utils.encode(password)) && user.getUserName().equals(username)){
@@ -90,9 +85,9 @@ public class UserIndexController {
                 responseModel.setMessage(LabConstant.LabLogin.LOGIN_EMPTY_MESSAGE);
             }
         }
-        String jsonString = JSONObject.toJSONString(responseModel);
-        logger.info(jsonString);
-        return jsonString;
+        JSONObject jsonObject = JSONObject.fromObject(responseModel);
+        logger.info(jsonObject.toString());
+        return jsonObject.toString();
     }
 
 

@@ -7,28 +7,33 @@ import java.util.Date;
  * Created by Lpan on 2017/11/30.
  */
 public class User {
-    private String id;
-    private String userName;           //在该系统的登录名(唯一)
-    private String name;                   //用户姓名(可以不唯一)
-    private String age;
-    private String sex;
+    private Integer id;
+
+    private String userName;
+
+    private String name;
+
+    private Integer age;
+
     private String password;
-    private String mobile;
-    private String Email;
-    private int  status ;      //状态  1 可用,0 不可用
-    private int isDelete;       //是否删除
-    private int type;               //用户类型
-    private String salt;                 //加密时的盐值
+
+    private String phone;
+
+    private String status;
+
+    private String type;
+
     private Date createTime;
+
     private Date updateTime;
-    private String  rememberMe;
+
     private String memo;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -37,7 +42,7 @@ public class User {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public String getName() {
@@ -45,23 +50,15 @@ public class User {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
     }
 
     public String getPassword() {
@@ -69,55 +66,31 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
-    public int getIsDelete() {
-        return isDelete;
-    }
-
-    public void setIsDelete(int isDelete) {
-        this.isDelete = isDelete;
-    }
-
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public Date getCreateTime() {
@@ -136,19 +109,28 @@ public class User {
         this.updateTime = updateTime;
     }
 
-    public String getRememberMe() {
-        return rememberMe;
-    }
-
-    public void setRememberMe(String rememberMe) {
-        this.rememberMe = rememberMe;
-    }
-
     public String getMemo() {
         return memo;
     }
 
     public void setMemo(String memo) {
-        this.memo = memo;
+        this.memo = memo == null ? null : memo.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", memo='" + memo + '\'' +
+                '}';
     }
 }

@@ -6,6 +6,10 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.xssf.usermodel.XSSFCell;
+//import org.apache.poi.xssf.usermodel.XSSFRow;
+//import org.apache.poi.xssf.usermodel.XSSFSheet;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 import java.io.FileInputStream;
@@ -19,8 +23,8 @@ import java.io.IOException;
 public class InputExcel {
 
     public static void main(String args[]){
-        readExcel();
-        //readexcel07plus();
+        //readExcel();
+        readexcel07plus();
     }
 
     /**
@@ -70,7 +74,7 @@ public class InputExcel {
     public static void readexcel07plus(){
         FileInputStream fileInputStream = null;
         try {
-            fileInputStream = new FileInputStream("D:\\aa\\宝付产品额度20170207.xlsx");
+            fileInputStream = new FileInputStream("D:\\aa\\20170207.xlsx");
             XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fileInputStream);
             XSSFSheet sheet = xssfWorkbook.getSheet("B2B支持银行");
             int rowNum = sheet.getLastRowNum();//获取sheet表中行数

@@ -1,5 +1,4 @@
 package com.laboratory.system.resource.dao;
-;
 
 import com.laboratory.system.resource.model.Resources;
 
