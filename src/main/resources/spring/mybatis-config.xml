@@ -16,6 +16,12 @@
             <typeAlias type="com.laboratory.system.role.model.Role" alias="roleModel"></typeAlias>
             <typeAlias type="com.laboratory.system.role.model.RoleResource" alias="roleResourceModel"></typeAlias>
             <typeAlias type="com.laboratory.system.role.model.UserRole" alias="userRoleModel"></typeAlias>
+
+            <typeAlias type="com.laboratory.stoppage.model.StopPage" alias="stopPage"></typeAlias>
+            <typeAlias type="com.laboratory.project.model.ProjectInfo" alias="projectInfo"></typeAlias>
+            <typeAlias type="com.laboratory.stoppage.model.DataStopPage" alias="dataStopPage"></typeAlias>
+            <typeAlias type="com.laboratory.laboratory.model.Laboratory" alias="laboratory"></typeAlias>
+
     </typeAliases>
 
     <!--<mappers>-->
