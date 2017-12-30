@@ -12,10 +12,10 @@ public class LabConstant {
         public static final int LOGIN_FAILED_CODE = 0001;
         public static final int LOGIN_ERROR_CODE = 0002;
         public static final int LOGIN_EMPTY_CODE = 0003;
-        public static final String LOGIN_SUCCESS = "SUCCESS";
-        public static final String LOGIN_FAILED= "FAILD";
-        public static final String LOGIN_ERROR= "ERROR";
-        public static final String LOGIN_EMPTY= "EMPTY";
+//        public static final String LOGIN_SUCCESS = "SUCCESS";
+//        public static final String LOGIN_FAILED= "FAILD";
+//        public static final String LOGIN_ERROR= "ERROR";
+//        public static final String LOGIN_EMPTY= "EMPTY";
         public static final String LOGIN_SUCCESS_MESSAGE = "登录成功";
         public static final String LOGIN_FAILED_MESSAGE = "用户名或密码不正确";
         public static final String LOGIN_ERROR_MESSAGE = "用户不存在";
@@ -29,11 +29,6 @@ public class LabConstant {
         public static final int OPERATE_EMPTY_STATUS = 0003;
         public static final int OPERATE_EXIST_STATUS = 0004;
 
-        public static final String OPERATE_SUCCESS = "SUCCESS";
-        public static final String OPERATE_FAILED= "FAILED";
-        public static final String OPERATE_EXCEPTION= "EXCEPTION";
-        public static final String OPERATE_EMPTY= "EMPTY";
-        public static final String OPERATE_EXIST= "EXIST";
         public static final String OPERATE_SUCCESS_MESSAGE = "操作成功";
         public static final String OPERATE_FAILED_MESSAGE = "操作失败";
         public static final String OPERATE_EXCEPTION_MESSAGE = "操作异常";
