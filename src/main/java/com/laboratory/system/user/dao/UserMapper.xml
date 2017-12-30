@@ -110,7 +110,7 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="userModel">
-        SELECT * FROM lab_user WHERE status = 1 AND id=#{id}
+        SELECT u.id,u.name,u.user_name,u.phone,u.status,u.type FROM lab_user u WHERE status = 1 AND id=#{id}
     </select>
     <update id="updateByPrimaryKey" parameterType="userModel" >
     update lab_user
@@ -170,7 +170,7 @@
     </update>
 
     <select id="selectAllByPage" parameterType="java.util.Map" resultType="userModel">
-        SELECT  *  FROM  lab_user WHERE  1=1
+        SELECT  u.id,u.user_name,u.name,u.phone,u.create_time,u.status,u.type FROM  lab_user  u WHERE  1=1
         <if test="userName != null and  userName !=''">
             AND user_name=#{userName}
         </if>
@@ -190,7 +190,7 @@
             limit 0, 10
         </if>
     </select>
-    <select id="selectAllByPageCount" parameterType="java.util.Map" resultType="userModel">
+    <select id="selectAllByPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT  count(1) FROM  lab_user WHERE  1=1
         <if test="userName != null and  userName !=''">
             AND user_name=#{userName}
@@ -203,12 +203,6 @@
         </if>
         <if test="stauts != null and  status !=''" >
             AND  status =#{status}
-        </if>
-        <if test="pageStart!=null and pageSize!=null">
-            limit #{pageStart}, #{pageSize}
-        </if>
-        <if test="pageStart==null or pageSize==null">
-            limit 0, 10
         </if>
     </select>
 

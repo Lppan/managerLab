@@ -1,12 +1,17 @@
 package com.laboratory.system.user.model;
 
+import com.laboratory.labport.model.BaseModel;
+
 import java.util.Date;
 
 /**
  * user model
  * Created by Lpan on 2017/11/30.
  */
-public class User {
+public class User extends BaseModel{
+
+    private static final long serialVersionUID = 1903282647294845782L;
+
     private Integer id;
 
     private String userName;

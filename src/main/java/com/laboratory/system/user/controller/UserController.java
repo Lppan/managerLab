@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +38,6 @@ public class UserController {
             responseModel= userService.insert(userMap);
         }else{
             responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-            responseModel.setCode(LabConstant.operateModel.OPERATE_EMPTY);
             responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+"：用户信息不能为空");
         }
         //responseModel.setData("");
@@ -64,7 +62,6 @@ public class UserController {
         }else{
             //必要参数为空
             responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-            responseModel.setCode(LabConstant.operateModel.OPERATE_EMPTY);
             responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+"：id不能为空");
         }
         JSONObject object = JSONObject.fromObject(responseModel);
@@ -117,12 +114,14 @@ public class UserController {
         return status;
     }
 
-    @RequestMapping("/selectAllByPage")
+    @RequestMapping(value = "/selectAllByPage",produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String selectAllByPage(HttpServletRequest request , @RequestParam Map<String,Object> paramMap){
-        String returnStr = null;
-
-        return returnStr;
+    public String selectAllByPage(HttpServletRequest request){
+        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
+        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
+        ResponseModel responseModel = userService.selectAllByPage(request, paramMap);
+        JSONObject object = JSONObject.fromObject(responseModel);
+        return object.toString();
     }
 
 

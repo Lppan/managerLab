@@ -58,30 +58,30 @@ public class UserIndexController {
                         //获取权限信息
 
                         responseModel.setStatus(LabConstant.LabLogin.LOGIN_SUCCESS_CODE);
-                        responseModel.setCode(LabConstant.LabLogin.LOGIN_SUCCESS);
+                        //responseModel.setCode(LabConstant.LabLogin.LOGIN_SUCCESS);
                         responseModel.setMessage(LabConstant.LabLogin.LOGIN_SUCCESS_MESSAGE);
 
                     }else{
                         //用户名密码不正确
                         responseModel.setStatus(LabConstant.LabLogin.LOGIN_FAILED_CODE);
-                        responseModel.setCode(LabConstant.LabLogin.LOGIN_FAILED);
+                        //responseModel.setCode(LabConstant.LabLogin.LOGIN_FAILED);
                         responseModel.setMessage(LabConstant.LabLogin.LOGIN_FAILED_MESSAGE);
                     }
                 }else{
                     //用户不存在
                     responseModel.setStatus(LabConstant.LabLogin.LOGIN_ERROR_CODE);
-                    responseModel.setCode(LabConstant.LabLogin.LOGIN_ERROR);
+                    //responseModel.setCode(LabConstant.LabLogin.LOGIN_ERROR);
                     responseModel.setMessage(LabConstant.LabLogin.LOGIN_ERROR_MESSAGE);
                 }
                 }catch (Exception e){
                     responseModel.setStatus(LabConstant.LabLogin.LOGIN_FAILED_CODE);
-                    responseModel.setCode(LabConstant.LabLogin.LOGIN_FAILED);
+                    //responseModel.setCode(LabConstant.LabLogin.LOGIN_FAILED);
                     responseModel.setMessage(LabConstant.LabLogin.LOGIN_FAILED_MESSAGE);
                 }
             }else{
                     //用户名或密码不能为空
                 responseModel.setStatus(LabConstant.LabLogin.LOGIN_EMPTY_CODE);
-                responseModel.setCode(LabConstant.LabLogin.LOGIN_EMPTY);
+                //responseModel.setCode(LabConstant.LabLogin.LOGIN_EMPTY);
                 responseModel.setMessage(LabConstant.LabLogin.LOGIN_EMPTY_MESSAGE);
             }
         }
