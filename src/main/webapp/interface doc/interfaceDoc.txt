@@ -3,7 +3,7 @@
 
 BASE URL 
 
-http://localhost:8080/system
+http://localhost:8080/
 
 
 1、用户登录
@@ -50,6 +50,148 @@ REQUEST
 	"type":"3",
 	"userName":"刘四"
 }
+RESPONSE
+{
+    "data": "",
+    "message": "操作成功",
+    "pageMap": {},
+    "status": 0
+}
 
+//如果用户名重复
+{
+    "data": "",
+    "message": "用户已经存在",
+    "pageMap": {},
+    "status": 4
+}
 
+{
+    "data": "",
+    "message": "必要参数不能为空：用户信息不能为空",
+    "pageMap": {},
+    "status": 3
+}
 
+//如果密码为空
+REQUEST
+{
+    ...
+    "password":"",
+    ...
+}
+{
+    "data": "",
+    "message": "必要参数不能为空:密码不能为空",
+    "pageMap": {},
+    "status": 3
+}
+
+根据id查询用户
+/selectById
+
+REQUEST
+{
+	"id":34
+}
+RESPONSE
+{
+    "data": {
+        "phone": "18532541785",
+        "name": "test2",
+        "id": 34,
+        "type": "2",
+        "userName": "王五五",
+        "status": "1"
+    },
+    "message": "操作成功",
+    "pageMap": {},
+    "status": 0
+}
+//如果id为空
+{
+    "data": "",
+    "message": "必要参数不能为空：id不能为空",
+    "pageMap": {},
+    "status": 3
+}
+
+//查询所有用户
+
+REQUEST
+{
+
+}
+
+RESPONSE
+{
+    "data": [
+        {
+            "createTime": 1514369033000,
+            "phone": "18515423537",
+            "name": "史攀",
+            "id": 31,
+            "type": "1",
+            "userName": "史攀",
+            "status": "1"
+        },
+        {
+            "createTime": 1514369809000,
+            "phone": "18515423685",
+            "name": "test",
+            "id": 32,
+            "type": "2",
+            "userName": "张三",
+            "status": "1"
+        },
+        {
+            "createTime": 1514370626000,
+            "phone": "18532541785",
+            "name": "test2",
+            "id": 34,
+            "type": "2",
+            "userName": "王五五",
+            "status": "1"
+        },
+        {
+            "createTime": 1514370857000,
+            "phone": "18532541785",
+            "name": "test1",
+            "id": 35,
+            "type": "2",
+            "userName": "李四",
+            "status": "1"
+        },
+        {
+            "createTime": 1514374828000,
+            "phone": "18532541785",
+            "name": "test2",
+            "id": 36,
+            "type": "2",
+            "userName": "王五",
+            "status": "1"
+        },
+        {
+            "createTime": 1514434120000,
+            "phone": "18532589635",
+            "name": "guest",
+            "id": 37,
+            "type": "3",
+            "userName": "刘四",
+            "status": "1"
+        }
+    ],
+    "message": "操作成功",
+    "pageMap": {
+        "next": 1,
+        "pageTotal": 1,
+        "previous": 1,
+        "last": 1,
+        "pageStart": 0,
+        "count": 8,
+        "pageSize": 10,
+        "page": 1,
+        "first": "1"
+    },
+    "status": 0
+}
