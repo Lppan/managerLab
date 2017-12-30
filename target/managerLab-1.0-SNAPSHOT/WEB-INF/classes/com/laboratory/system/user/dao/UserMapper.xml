@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laboratory.system.user.dao.UserMapper">
+    <!--keyProperty 将自增长后的id赋值给实体类-->
+    <!--useGeneratedKeys 配置为true 给主键设置自增长-->
+    <!--以上两个配置在插入时返回主键到实体类
+        此处是方法一： -->
+    <!-- <insert></insert> 没有resultType标签 -->
+    <resultMap id="BaseResultMap" type="userModel" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="age" property="age" jdbcType="INTEGER" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="memo" property="memo" jdbcType="VARCHAR" />
+    </resultMap>
+    <!--插入-->
+    <insert id="insert" parameterType="userModel" >
+        insert into lab_user (id, user_name, name,
+        age, password, phone,
+        status, type, create_time,
+        update_time, memo)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR})
+    </insert>
+    <!--有选择性的插入-->
+    <insert id="insertSelective" parameterType="java.util.Map" >
+        insert into lab_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="age != null" >
+                age,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+                create_time,
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+            <if test="memo != null" >
+                memo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null" >
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+                now(),
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memo != null" >
+                #{memo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--方法二：-->
+    <!--<insert></insert> 中没有resultType属性，但是<selectKey></selectKey> 标签是有的。-->
+    <!-- order="AFTER" 表示先执行插入后执行查询 可为BEFORE  BEFORE时会先选择主键然后设置keyProperty 后执行-->
+
+    <!--根据主键删除 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from lab_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="userModel">
+        SELECT u.id,u.name,u.user_name,u.phone,u.status,u.type FROM lab_user u WHERE status = 1 AND id=#{id}
+    </select>
+    <update id="updateByPrimaryKey" parameterType="userModel" >
+    update lab_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+        update lab_user
+        <set >
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null" >
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="password != null" >
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+                update_time = now(),
+            <if test="memo != null" >
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!--根据主键修改状态-->
+    <update id="updateStatus" parameterType="string">
+        UPDATE lab_user SET
+        <if test="status != null and status!=''">
+            status=#{status}
+        </if>
+        WHERE id=#{id}
+    </update>
+
+    <select id="selectAllByPage" parameterType="java.util.Map" resultType="userModel">
+        SELECT  u.id,u.user_name,u.name,u.phone,u.create_time,u.status,u.type FROM  lab_user  u WHERE  1=1
+        <if test="userName != null and  userName !=''">
+            AND user_name=#{userName}
+        </if>
+        <if test="name != null and  name !=''">
+            AND name=#{name}
+        </if>
+        <if test="phone != null and phone !=''">
+            AND   phone=#{phone}
+        </if>
+        <if test="stauts != null and  status !=''" >
+            AND  status =#{status}
+        </if>
+        <if test="pageStart!=null and pageSize!=null">
+            limit #{pageStart}, #{pageSize}
+        </if>
+        <if test="pageStart==null or pageSize==null">
+            limit 0, 10
+        </if>
+    </select>
+    <select id="selectAllByPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT  count(1) FROM  lab_user WHERE  1=1
+        <if test="userName != null and  userName !=''">
+            AND user_name=#{userName}
+        </if>
+        <if test="name != null and  name !=''">
+            AND name=#{name}
+        </if>
+        <if test="phone != null and phone !=''">
+            AND   phone=#{phone}
+        </if>
+        <if test="stauts != null and  status !=''" >
+            AND  status =#{status}
+        </if>
+    </select>
+
+    <select id="selectUserByUserName" parameterType="java.util.Map" resultType="userModel">
+          SELECT  *  FROM  lab_user WHERE  1=1
+        <if test="userName != null and  userName !=''">
+            AND  user_name=#{userName}
+        </if>
+        <if test="phone != null and phone !=''">
+            AND   phone=#{phone}
+        </if>
+    </select>
+
+</mapper>

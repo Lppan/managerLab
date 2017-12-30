@@ -1,0 +1,24 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+    String path = request.getContextPath();
+    String profiles = null;
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    try{profiles = System.getProperty("spring.profiles.active");}catch(Exception e){}
+    if(null == profiles || "development".equals(profiles)){
+        basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+    }else if("test".equals(profiles)){
+        basePath="https://"+request.getServerName()+path;
+        //basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path;
+    }else if("production".equals(profiles)){
+        basePath="https://"+request.getServerName()+path;
+    }else if("production_haikou".equals(profiles)){
+        basePath="https://"+request.getServerName()+path;
+    }else {
+        basePath="https://"+request.getServerName()+path;
+    }
+    //session.setAttribute("ctx", basePath);
+    request.setAttribute("basePath", basePath);
+%>
+<script type="text/javascript">
+    var basePath = '<%=basePath%>';
+</script>
