@@ -170,7 +170,7 @@
     </update>
 
     <select id="selectAllByPage" parameterType="java.util.Map" resultType="userModel">
-        SELECT  u.id,u.user_name,u.name,u.phone,u.create_time,u.status,u.type FROM  lab_user  u WHERE  1=1
+        SELECT  u.id,u.user_name,u.phone,u.create_time,u.status,u.type FROM  lab_user  u WHERE  1=1
         <if test="userName != null and  userName !=''">
             AND user_name=#{userName}
         </if>
