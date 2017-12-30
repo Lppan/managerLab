@@ -114,7 +114,7 @@ public class UserController {
         return status;
     }
 
-    @RequestMapping(value = "/selectAllByPage",produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/getUserList",produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String selectAllByPage(HttpServletRequest request){
         JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
