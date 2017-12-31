@@ -13,7 +13,8 @@
         <result column="age" property="age" jdbcType="INTEGER" />
         <result column="password" property="password" jdbcType="VARCHAR" />
         <result column="phone" property="phone" jdbcType="VARCHAR" />
-        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
         <result column="type" property="type" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -212,7 +213,10 @@
             AND  user_name=#{userName}
         </if>
         <if test="phone != null and phone !=''">
-            AND   phone=#{phone}
+            AND  phone=#{phone}
+        </if>
+        <if test="id != null and is !=''">
+            AND id != #{id}
         </if>
     </select>
 
