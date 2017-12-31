@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+      <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+          <property name="cacheManager" ref="cacheManager"/>
+          <property name="realm" ref="userRealm"/>
+      </bean>
+
+      <bean id="userRealm" class="com.laboratory.system.shiro.realm.OperateUserRealm"/>
+
+      <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+          <property name="securityManager" ref="securityManager"/>
+          <!--<property name="loginUrl" value="/usr/login"/>-->
+          <property name="successUrl" value="/indexpage/indexpage"/>
+          <property name="unauthorizedUrl" value="/user/login"/>
+          <property name="filterChainDefinitions">
+              <value>
+                  /css/**	   =anon
+                  /hplus/**  =anon
+                  /errorpage/**   =anon
+                  /**        =authc
+              </value>
+          </property>
+      </bean>
+
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:spring/shiro-ehcache.xml" />
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+
+</beans>

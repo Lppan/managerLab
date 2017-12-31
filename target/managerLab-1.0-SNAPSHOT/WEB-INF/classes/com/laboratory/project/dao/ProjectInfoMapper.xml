@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laboratory.project.dao.ProjectInfoMapper">
+  <resultMap id="BaseResultMap" type="com.laboratory.project.model.ProjectInfo">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="parent_project_name" property="parentProjectName" jdbcType="VARCHAR" />
+    <result column="project_principal" property="projectPrincipal" jdbcType="VARCHAR" />
+    <result column="machine_type" property="machineType" jdbcType="VARCHAR" />
+    <result column="machine_no" property="machineNo" jdbcType="VARCHAR" />
+    <result column="power_rate" property="powerRate" jdbcType="REAL" />
+    <result column="rotate_speed" property="rotateSpeed" jdbcType="INTEGER" />
+    <result column="oil_consume_sign" property="oilConsumeSign" jdbcType="INTEGER" />
+    <result column="torsion_space" property="torsionSpace" jdbcType="INTEGER" />
+    <result column="oil_consume_low" property="oilConsumeLow" jdbcType="INTEGER" />
+    <result column="speed_point_total" property="speedPointTotal" jdbcType="INTEGER" />
+    <result column="importance_level" property="importanceLevel" jdbcType="VARCHAR" />
+    <result column="plan_begin_time" property="planBeginTime" jdbcType="TIMESTAMP" />
+    <result column="plan_end_time" property="planEndTime" jdbcType="TIMESTAMP" />
+    <result column="project_cycle" property="projectCycle" jdbcType="VARCHAR" />
+    <result column="project_content" property="projectContent" jdbcType="INTEGER" />
+    <result column="operation_instruction" property="operationInstruction" jdbcType="VARCHAR" />
+    <result column="property_character_list" property="propertyCharacterList" jdbcType="VARCHAR" />
+    <result column="machine_no_list" property="machineNoList" jdbcType="VARCHAR" />
+    <result column="dais" property="dais" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="is_stoppage" property="isStoppage" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, project_name, parent_project_name, project_principal, machine_type, machine_no, 
+    power_rate, rotate_speed, oil_consume_sign, torsion_space, oil_consume_low, speed_point_total, 
+    importance_level, plan_begin_time, plan_end_time, project_cycle, project_content, 
+    operation_instruction, property_character_list, machine_no_list, dais, status, is_stoppage, 
+    create_time, update_time, memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from lab_project_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from lab_project_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="projectInfo" >
+    insert into lab_project_info (id, project_name, parent_project_name, 
+      project_principal, machine_type, machine_no, 
+      power_rate, rotate_speed, oil_consume_sign, 
+      torsion_space, oil_consume_low, speed_point_total, 
+      importance_level, plan_begin_time, plan_end_time, 
+      project_cycle, project_content, operation_instruction, 
+      property_character_list, machine_no_list, dais, 
+      status, is_stoppage, create_time, 
+      update_time, memo)
+    values (#{id,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{parentProjectName,jdbcType=VARCHAR}, 
+      #{projectPrincipal,jdbcType=VARCHAR}, #{machineType,jdbcType=VARCHAR}, #{machineNo,jdbcType=VARCHAR}, 
+      #{powerRate,jdbcType=REAL}, #{rotateSpeed,jdbcType=INTEGER}, #{oilConsumeSign,jdbcType=INTEGER}, 
+      #{torsionSpace,jdbcType=INTEGER}, #{oilConsumeLow,jdbcType=INTEGER}, #{speedPointTotal,jdbcType=INTEGER}, 
+      #{importanceLevel,jdbcType=VARCHAR}, #{planBeginTime,jdbcType=TIMESTAMP}, #{planEndTime,jdbcType=TIMESTAMP}, 
+      #{projectCycle,jdbcType=VARCHAR}, #{projectContent,jdbcType=INTEGER}, #{operationInstruction,jdbcType=VARCHAR}, 
+      #{propertyCharacterList,jdbcType=VARCHAR}, #{machineNoList,jdbcType=VARCHAR}, #{dais,jdbcType=INTEGER}, 
+      #{status,jdbcType=VARCHAR}, #{isStoppage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="java.util.Map" >
+    insert into lab_project_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="parentProjectName != null" >
+        parent_project_name,
+      </if>
+      <if test="projectPrincipal != null" >
+        project_principal,
+      </if>
+      <if test="machineType != null" >
+        machine_type,
+      </if>
+      <if test="machineNo != null" >
+        machine_no,
+      </if>
+      <if test="powerRate != null" >
+        power_rate,
+      </if>
+      <if test="rotateSpeed != null" >
+        rotate_speed,
+      </if>
+      <if test="oilConsumeSign != null" >
+        oil_consume_sign,
+      </if>
+      <if test="torsionSpace != null" >
+        torsion_space,
+      </if>
+      <if test="oilConsumeLow != null" >
+        oil_consume_low,
+      </if>
+      <if test="speedPointTotal != null" >
+        speed_point_total,
+      </if>
+      <if test="importanceLevel != null" >
+        importance_level,
+      </if>
+      <if test="planBeginTime != null" >
+        plan_begin_time,
+      </if>
+      <if test="planEndTime != null" >
+        plan_end_time,
+      </if>
+      <if test="projectCycle != null" >
+        project_cycle,
+      </if>
+      <if test="projectContent != null" >
+        project_content,
+      </if>
+      <if test="operationInstruction != null" >
+        operation_instruction,
+      </if>
+      <if test="propertyCharacterList != null" >
+        property_character_list,
+      </if>
+      <if test="machineNoList != null" >
+        machine_no_list,
+      </if>
+      <if test="dais != null" >
+        dais,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isStoppage != null" >
+        is_stoppage,
+      </if>
+
+        create_time,
+
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentProjectName != null" >
+        #{parentProjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectPrincipal != null" >
+        #{projectPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="machineType != null" >
+        #{machineType,jdbcType=VARCHAR},
+      </if>
+      <if test="machineNo != null" >
+        #{machineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="powerRate != null" >
+        #{powerRate,jdbcType=REAL},
+      </if>
+      <if test="rotateSpeed != null" >
+        #{rotateSpeed,jdbcType=INTEGER},
+      </if>
+      <if test="oilConsumeSign != null" >
+        #{oilConsumeSign,jdbcType=INTEGER},
+      </if>
+      <if test="torsionSpace != null" >
+        #{torsionSpace,jdbcType=INTEGER},
+      </if>
+      <if test="oilConsumeLow != null" >
+        #{oilConsumeLow,jdbcType=INTEGER},
+      </if>
+      <if test="speedPointTotal != null" >
+        #{speedPointTotal,jdbcType=INTEGER},
+      </if>
+      <if test="importanceLevel != null" >
+        #{importanceLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="planBeginTime != null" >
+        #{planBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planEndTime != null" >
+        #{planEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectCycle != null" >
+        #{projectCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="projectContent != null" >
+        #{projectContent,jdbcType=INTEGER},
+      </if>
+      <if test="operationInstruction != null" >
+        #{operationInstruction,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyCharacterList != null" >
+        #{propertyCharacterList,jdbcType=VARCHAR},
+      </if>
+      <if test="machineNoList != null" >
+        #{machineNoList,jdbcType=VARCHAR},
+      </if>
+      <if test="dais != null" >
+        #{dais,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isStoppage != null" >
+        #{isStoppage,jdbcType=VARCHAR},
+      </if>
+        now(),
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map">
+    update lab_project_info
+    <set >
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentProjectName != null" >
+        parent_project_name = #{parentProjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectPrincipal != null" >
+        project_principal = #{projectPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="machineType != null" >
+        machine_type = #{machineType,jdbcType=VARCHAR},
+      </if>
+      <if test="machineNo != null" >
+        machine_no = #{machineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="powerRate != null" >
+        power_rate = #{powerRate,jdbcType=REAL},
+      </if>
+      <if test="rotateSpeed != null" >
+        rotate_speed = #{rotateSpeed,jdbcType=INTEGER},
+      </if>
+      <if test="oilConsumeSign != null" >
+        oil_consume_sign = #{oilConsumeSign,jdbcType=INTEGER},
+      </if>
+      <if test="torsionSpace != null" >
+        torsion_space = #{torsionSpace,jdbcType=INTEGER},
+      </if>
+      <if test="oilConsumeLow != null" >
+        oil_consume_low = #{oilConsumeLow,jdbcType=INTEGER},
+      </if>
+      <if test="speedPointTotal != null" >
+        speed_point_total = #{speedPointTotal,jdbcType=INTEGER},
+      </if>
+      <if test="importanceLevel != null" >
+        importance_level = #{importanceLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="planBeginTime != null" >
+        plan_begin_time = #{planBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planEndTime != null" >
+        plan_end_time = #{planEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectCycle != null" >
+        project_cycle = #{projectCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="projectContent != null" >
+        project_content = #{projectContent,jdbcType=INTEGER},
+      </if>
+      <if test="operationInstruction != null" >
+        operation_instruction = #{operationInstruction,jdbcType=VARCHAR},
+      </if>
+      <if test="propertyCharacterList != null" >
+        property_character_list = #{propertyCharacterList,jdbcType=VARCHAR},
+      </if>
+      <if test="machineNoList != null" >
+        machine_no_list = #{machineNoList,jdbcType=VARCHAR},
+      </if>
+      <if test="dais != null" >
+        dais = #{dais,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isStoppage != null" >
+        is_stoppage = #{isStoppage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        update_time = now(),
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="projectInfo" >
+    update lab_project_info
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      parent_project_name = #{parentProjectName,jdbcType=VARCHAR},
+      project_principal = #{projectPrincipal,jdbcType=VARCHAR},
+      machine_type = #{machineType,jdbcType=VARCHAR},
+      machine_no = #{machineNo,jdbcType=VARCHAR},
+      power_rate = #{powerRate,jdbcType=REAL},
+      rotate_speed = #{rotateSpeed,jdbcType=INTEGER},
+      oil_consume_sign = #{oilConsumeSign,jdbcType=INTEGER},
+      torsion_space = #{torsionSpace,jdbcType=INTEGER},
+      oil_consume_low = #{oilConsumeLow,jdbcType=INTEGER},
+      speed_point_total = #{speedPointTotal,jdbcType=INTEGER},
+      importance_level = #{importanceLevel,jdbcType=VARCHAR},
+      plan_begin_time = #{planBeginTime,jdbcType=TIMESTAMP},
+      plan_end_time = #{planEndTime,jdbcType=TIMESTAMP},
+      project_cycle = #{projectCycle,jdbcType=VARCHAR},
+      project_content = #{projectContent,jdbcType=INTEGER},
+      operation_instruction = #{operationInstruction,jdbcType=VARCHAR},
+      property_character_list = #{propertyCharacterList,jdbcType=VARCHAR},
+      machine_no_list = #{machineNoList,jdbcType=VARCHAR},
+      dais = #{dais,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      is_stoppage = #{isStoppage,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectProjectAllByPage" parameterType="java.util.Map" resultType="projectInfo">
+    SELECT * FROM lab_project_info WHERE  1=1
+    <if test="projectName != null and projectName !=''">
+      AND project_name = #{projectName}
+    </if>
+    <if test="projectPrincipal != null and projectPrincipal !=''">
+      AND project_principal = #{projectPrincipal}
+    </if>
+    <if test="machineType != null and machineType != ''">
+      AND machine_type = #{machineType}
+    </if>
+    <if test="machineNo != null and machineNo !=''">
+      AND machine_no = #{machineNo}
+    </if>
+    <if test="dais != null and dais != ''">
+      AND dais = #{dais}
+    </if>
+    <if test="status != null and status !=''">
+      AND status = #{status}
+    </if>
+    <if test="createTime != null and ceateTime !=''">
+      AND create_time =#{createTIme}
+    </if>
+    <if test="pageStart!=null and pageSize!=null">
+      limit #{pageStart}, #{pageSize}
+    </if>
+    <if test="pageStart==null or pageSize==null">
+      limit 0, 10
+    </if>
+  </select>
+
+  <select id="selectProjectAllCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(1) FROM lab_project_info WHERE  1=1
+    <if test="projectName != null and projectName !=''">
+      AND project_name = #{projectName}
+    </if>
+    <if test="projectPrincipal != null and projectPrincipal !=''">
+      AND project_principal = #{projectPrincipal}
+    </if>
+    <if test="machineType != null and machineType != ''">
+      AND machine_type = #{machineType}
+    </if>
+    <if test="machineNo != null and machineNo !=''">
+      AND machine_no = #{machineNo}
+    </if>
+    <if test="dais != null and dais != ''">
+      AND dais = #{dais}
+    </if>
+    <if test="status != null and status !=''">
+      AND status = #{status}
+    </if>
+    <if test="createTime != null and ceateTime !=''">
+      AND create_time =#{createTIme}
+    </if>
+  </select>
+</mapper>

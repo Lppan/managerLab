@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- mysql 数据源链接 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- druid 可以不配置driverClass 他可以根据url自动识别 Druid 能够识别20多种url 常见的jdbc都包含-->
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <property name="filters" value="stat"/>
+        <!-- 配置初始化,最大,最小 连接 -->
+        <property name="initialSize" value="${dbc.initialSize}"/>
+        <property name="maxActive" value="${dbc.maxActive}"/>
+        <property name="minIdle" value="${dbc.minIdle}"/>
+        <!-- 获取链接最大等待超时时间 -->
+        <property name="maxWait" value="${dbc.maxWait}"/>
+        <!-- 配置间隔多久进行一次检测，检测需要关闭的空闲连接 单位毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${dbc.timeBetweenEvictionRunsMillis}"/>
+        <!-- 一个连接在池中的最小生存时间 -->
+        <property name="minEvictableIdleTimeMillis" value="${dbc.minEvictableIdleTimeMillis}"/>
+
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="50" />
+
+    </bean>
+</beans>

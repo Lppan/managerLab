@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laboratory.laboratory.dao.LaboratoryMapper" >
+  <resultMap id="BaseResultMap" type="com.laboratory.laboratory.model.Laboratory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="lab_no" property="labNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="lab_task" property="labTask" jdbcType="VARCHAR" />
+    <result column="parent_project" property="parentProject" jdbcType="VARCHAR" />
+    <result column="machine_type" property="machineType" jdbcType="VARCHAR" />
+    <result column="lab_principal" property="labPrincipal" jdbcType="VARCHAR" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, lab_no, status, lab_task, parent_project, machine_type, lab_principal, begin_time, 
+    end_time, memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from lab_laboratory
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from lab_laboratory
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="laboratory" >
+    insert into lab_laboratory (id, lab_no, status, 
+      lab_task, parent_project, machine_type, 
+      lab_principal, begin_time, end_time, 
+      memo)
+    values (#{id,jdbcType=INTEGER}, #{labNo,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{labTask,jdbcType=VARCHAR}, #{parentProject,jdbcType=VARCHAR}, #{machineType,jdbcType=VARCHAR}, 
+      #{labPrincipal,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{memo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="laboratory" >
+    insert into lab_laboratory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="labNo != null" >
+        lab_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="labTask != null" >
+        lab_task,
+      </if>
+      <if test="parentProject != null" >
+        parent_project,
+      </if>
+      <if test="machineType != null" >
+        machine_type,
+      </if>
+      <if test="labPrincipal != null" >
+        lab_principal,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="labNo != null" >
+        #{labNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="labTask != null" >
+        #{labTask,jdbcType=VARCHAR},
+      </if>
+      <if test="parentProject != null" >
+        #{parentProject,jdbcType=VARCHAR},
+      </if>
+      <if test="machineType != null" >
+        #{machineType,jdbcType=VARCHAR},
+      </if>
+      <if test="labPrincipal != null" >
+        #{labPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="laboratory" >
+    update lab_laboratory
+    <set >
+      <if test="labNo != null" >
+        lab_no = #{labNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="labTask != null" >
+        lab_task = #{labTask,jdbcType=VARCHAR},
+      </if>
+      <if test="parentProject != null" >
+        parent_project = #{parentProject,jdbcType=VARCHAR},
+      </if>
+      <if test="machineType != null" >
+        machine_type = #{machineType,jdbcType=VARCHAR},
+      </if>
+      <if test="labPrincipal != null" >
+        lab_principal = #{labPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="laboratory" >
+    update lab_laboratory
+    set lab_no = #{labNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      lab_task = #{labTask,jdbcType=VARCHAR},
+      parent_project = #{parentProject,jdbcType=VARCHAR},
+      machine_type = #{machineType,jdbcType=VARCHAR},
+      lab_principal = #{labPrincipal,jdbcType=VARCHAR},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
