@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laboratory.stoppage.dao.StopPageMapper" >
+  <resultMap id="BaseResultMap" type="com.laboratory.stoppage.model.StopPage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="bug_id" property="bugId" jdbcType="INTEGER" />
+    <result column="bug_parent_id" property="bugParentId" jdbcType="INTEGER" />
+    <result column="bug_type" property="bugType" jdbcType="VARCHAR" />
+    <result column="bug_detail" property="bugDetail" jdbcType="VARCHAR" />
+    <result column="bug_info" property="bugInfo" jdbcType="VARCHAR" />
+    <result column="bug_slove" property="bugSlove" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bug_id, bug_parent_id, bug_type, bug_detail, bug_info, bug_slove, project_id, 
+    create_time, update_time, status, memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from lab_stoppage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from lab_stoppage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="stopPage" >
+    insert into lab_stoppage (id, bug_id, bug_parent_id, 
+      bug_type, bug_detail, bug_info, 
+      bug_slove, project_id, create_time, 
+      update_time, status, memo
+      )
+    values (#{id,jdbcType=INTEGER}, #{bugId,jdbcType=INTEGER}, #{bugParentId,jdbcType=INTEGER}, 
+      #{bugType,jdbcType=VARCHAR}, #{bugDetail,jdbcType=VARCHAR}, #{bugInfo,jdbcType=VARCHAR}, 
+      #{bugSlove,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="stopPage" >
+    insert into lab_stoppage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bugId != null" >
+        bug_id,
+      </if>
+      <if test="bugParentId != null" >
+        bug_parent_id,
+      </if>
+      <if test="bugType != null" >
+        bug_type,
+      </if>
+      <if test="bugDetail != null" >
+        bug_detail,
+      </if>
+      <if test="bugInfo != null" >
+        bug_info,
+      </if>
+      <if test="bugSlove != null" >
+        bug_slove,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bugId != null" >
+        #{bugId,jdbcType=INTEGER},
+      </if>
+      <if test="bugParentId != null" >
+        #{bugParentId,jdbcType=INTEGER},
+      </if>
+      <if test="bugType != null" >
+        #{bugType,jdbcType=VARCHAR},
+      </if>
+      <if test="bugDetail != null" >
+        #{bugDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="bugInfo != null" >
+        #{bugInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="bugSlove != null" >
+        #{bugSlove,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="stopPage" >
+    update lab_stoppage
+    <set >
+      <if test="bugId != null" >
+        bug_id = #{bugId,jdbcType=INTEGER},
+      </if>
+      <if test="bugParentId != null" >
+        bug_parent_id = #{bugParentId,jdbcType=INTEGER},
+      </if>
+      <if test="bugType != null" >
+        bug_type = #{bugType,jdbcType=VARCHAR},
+      </if>
+      <if test="bugDetail != null" >
+        bug_detail = #{bugDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="bugInfo != null" >
+        bug_info = #{bugInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="bugSlove != null" >
+        bug_slove = #{bugSlove,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="stopPage" >
+    update lab_stoppage
+    set bug_id = #{bugId,jdbcType=INTEGER},
+      bug_parent_id = #{bugParentId,jdbcType=INTEGER},
+      bug_type = #{bugType,jdbcType=VARCHAR},
+      bug_detail = #{bugDetail,jdbcType=VARCHAR},
+      bug_info = #{bugInfo,jdbcType=VARCHAR},
+      bug_slove = #{bugSlove,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
