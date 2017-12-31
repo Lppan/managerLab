@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laboratory.stoppage.dao.DataStopPageMapper" >
+  <resultMap id="BaseResultMap" type="com.laboratory.stoppage.model.DataStopPage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="bug_name" property="bugName" jdbcType="VARCHAR" />
+    <result column="bug_type" property="bugType" jdbcType="VARCHAR" />
+    <result column="bug_code" property="bugCode" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bug_name, bug_type, bug_code, parent_id, create_time, status, memo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from lab_data_stoppage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from lab_data_stoppage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="dataStopPage" >
+    insert into lab_data_stoppage (id, bug_name, bug_type, 
+      bug_code, parent_id, create_time, 
+      status, memo)
+    values (#{id,jdbcType=INTEGER}, #{bugName,jdbcType=VARCHAR}, #{bugType,jdbcType=VARCHAR}, 
+      #{bugCode,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dataStopPage" >
+    insert into lab_data_stoppage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bugName != null" >
+        bug_name,
+      </if>
+      <if test="bugType != null" >
+        bug_type,
+      </if>
+      <if test="bugCode != null" >
+        bug_code,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bugName != null" >
+        #{bugName,jdbcType=VARCHAR},
+      </if>
+      <if test="bugType != null" >
+        #{bugType,jdbcType=VARCHAR},
+      </if>
+      <if test="bugCode != null" >
+        #{bugCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dataStopPage" >
+    update lab_data_stoppage
+    <set >
+      <if test="bugName != null" >
+        bug_name = #{bugName,jdbcType=VARCHAR},
+      </if>
+      <if test="bugType != null" >
+        bug_type = #{bugType,jdbcType=VARCHAR},
+      </if>
+      <if test="bugCode != null" >
+        bug_code = #{bugCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dataStopPage" >
+    update lab_data_stoppage
+    set bug_name = #{bugName,jdbcType=VARCHAR},
+      bug_type = #{bugType,jdbcType=VARCHAR},
+      bug_code = #{bugCode,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getDebugType" resultType="java.util.Map">
+    SELECT bug_name bugNameb ,bug_type bugType
+    FROM lab_data_stoppage
+    WHERE parent_id=0
+  </select>
+
+  <select id="getDebugInfoByType" resultType="java.util.Map" parameterType="java.lang.Integer">
+    SELECT  bug_name bugName,bug_type bugType
+    FROM lab_data_stoppage
+    WHERE parent_id=#{id,jdbcType=INTEGER}
+  </select>
+
+
+</mapper>
