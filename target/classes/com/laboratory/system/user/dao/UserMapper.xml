@@ -24,11 +24,19 @@
     <insert id="insert" parameterType="userModel" >
         insert into lab_user (id, user_name, name,
         age, password, phone,
+<<<<<<< HEAD
         status,is_delete, type, create_time,
         update_time, memo)
         values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
         #{age,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
         #{status,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+=======
+        status, type, create_time,
+        update_time, memo)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
         #{updateTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR})
     </insert>
     <!--有选择性的插入-->
@@ -56,9 +64,12 @@
             <if test="status != null" >
                 status,
             </if>
+<<<<<<< HEAD
             <if test="isDelete != null" >
                 is_delete,
             </if>
+=======
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
             <if test="type != null" >
                 type,
             </if>
@@ -90,9 +101,12 @@
                 #{phone,jdbcType=VARCHAR},
             </if>
             <if test="status != null" >
+<<<<<<< HEAD
                 #{status,jdbcType=INTEGER},
             </if>
             <if test="status != null" >
+=======
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
                 #{status,jdbcType=VARCHAR},
             </if>
             <if test="type != null" >

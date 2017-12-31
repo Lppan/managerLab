@@ -13,8 +13,12 @@
         <result column="age" property="age" jdbcType="INTEGER" />
         <result column="password" property="password" jdbcType="VARCHAR" />
         <result column="phone" property="phone" jdbcType="VARCHAR" />
+<<<<<<< HEAD
         <result column="status" property="status" jdbcType="INTEGER" />
         <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+=======
+        <result column="status" property="status" jdbcType="VARCHAR" />
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
         <result column="type" property="type" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -24,11 +28,19 @@
     <insert id="insert" parameterType="userModel" >
         insert into lab_user (id, user_name, name,
         age, password, phone,
+<<<<<<< HEAD
         status,is_delete, type, create_time,
         update_time, memo)
         values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
         #{age,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
         #{status,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+=======
+        status, type, create_time,
+        update_time, memo)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
         #{updateTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR})
     </insert>
     <!--有选择性的插入-->
@@ -56,9 +68,12 @@
             <if test="status != null" >
                 status,
             </if>
+<<<<<<< HEAD
             <if test="isDelete != null" >
                 is_delete,
             </if>
+=======
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
             <if test="type != null" >
                 type,
             </if>
@@ -90,9 +105,12 @@
                 #{phone,jdbcType=VARCHAR},
             </if>
             <if test="status != null" >
+<<<<<<< HEAD
                 #{status,jdbcType=INTEGER},
             </if>
             <if test="status != null" >
+=======
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
                 #{status,jdbcType=VARCHAR},
             </if>
             <if test="type != null" >
@@ -177,7 +195,11 @@
     </update>
 
     <select id="selectAllByPage" parameterType="java.util.Map" resultType="userModel">
+<<<<<<< HEAD
         SELECT  u.id,u.user_name,u.phone,u.create_time,u.status,u.type FROM  lab_user  u WHERE  1=1
+=======
+        SELECT  u.id,u.user_name,u.name,u.phone,u.create_time,u.status,u.type FROM  lab_user  u WHERE  1=1
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
         <if test="userName != null and  userName !=''">
             AND user_name=#{userName}
         </if>
@@ -219,10 +241,14 @@
             AND  user_name=#{userName}
         </if>
         <if test="phone != null and phone !=''">
+<<<<<<< HEAD
             AND  phone=#{phone}
         </if>
         <if test="id != null and is !=''">
             AND id != #{id}
+=======
+            AND   phone=#{phone}
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
         </if>
     </select>
 

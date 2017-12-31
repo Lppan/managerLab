@@ -1,6 +1,7 @@
 <component name="libraryTable">
   <library name="Maven: com.alibaba:fastjson:1.2.34">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.m2/repository/com/alibaba/fastjson/1.2.34/fastjson-1.2.34.jar!/" />
     </CLASSES>
     <JAVADOC>
@@ -8,6 +9,15 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.m2/repository/com/alibaba/fastjson/1.2.34/fastjson-1.2.34-sources.jar!/" />
+=======
+      <root url="jar://D:/Develop/maven/repository/com/alibaba/fastjson/1.2.34/fastjson-1.2.34.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/Develop/maven/repository/com/alibaba/fastjson/1.2.34/fastjson-1.2.34-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/Develop/maven/repository/com/alibaba/fastjson/1.2.34/fastjson-1.2.34-sources.jar!/" />
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
     </SOURCES>
   </library>
 </component>

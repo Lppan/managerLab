@@ -1,6 +1,7 @@
 <component name="libraryTable">
   <library name="Maven: log4j:log4j:1.2.17">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar!/" />
     </CLASSES>
     <JAVADOC>
@@ -8,6 +9,15 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17-sources.jar!/" />
+=======
+      <root url="jar://D:/Develop/maven/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/Develop/maven/repository/log4j/log4j/1.2.17/log4j-1.2.17-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/Develop/maven/repository/log4j/log4j/1.2.17/log4j-1.2.17-sources.jar!/" />
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
     </SOURCES>
   </library>
 </component>

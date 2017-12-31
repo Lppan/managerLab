@@ -1,6 +1,7 @@
 <component name="libraryTable">
   <library name="Maven: mysql:mysql-connector-java:5.1.30">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://$USER_HOME$/.m2/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar!/" />
     </CLASSES>
     <JAVADOC>
@@ -8,6 +9,15 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.m2/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30-sources.jar!/" />
+=======
+      <root url="jar://D:/Develop/maven/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/Develop/maven/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/Develop/maven/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30-sources.jar!/" />
+>>>>>>> c860cc7f0035b35a115f13db8e953051ad9fcfdd
     </SOURCES>
   </library>
 </component>
