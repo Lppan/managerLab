@@ -10,37 +10,37 @@ public class ProjectInfo extends BaseModel{
 
     private Integer id;
 
-    private String projectName;
+    private String projectName;                 //项目名
 
-    private String parentProjectName;
+    private String parentProjectName;           //所属项目
 
-    private String projectPrincipal;
+    private String projectPrincipal;            //项目负责人
 
-    private String machineType;
+    private String machineType;                 //机型
 
-    private String machineNo;
+    private String machineNo;                   //机号
 
-    private Float powerRate;
+    private Float powerRate;                    //标定点功率
 
-    private Integer rotateSpeed;
+    private Integer rotateSpeed;                //标定点功率转速
 
-    private Integer oilConsumeSign;
+    private Integer oilConsumeSign;             //标定点油耗
 
-    private Integer torsionSpace;
+    private Integer torsionSpace;               //最大扭矩
 
-    private Integer oilConsumeLow;
+    private Integer oilConsumeLow;              //
 
-    private Integer speedPointTotal;
+    private Integer speedPointTotal;            //怠速点
 
-    private String importanceLevel;
+    private String importanceLevel;             //项目重要度
 
-    private Date planBeginTime;
+    private Date planBeginTime;                 //计划开始时间
 
-    private Date planEndTime;
+    private Date planEndTime;                   //计划结束时间
 
-    private String projectCycle;
+    private String projectCycle;                //项目周期
 
-    private Integer projectContent;
+    private Integer projectContent;             //
 
     private String operationInstruction;
 

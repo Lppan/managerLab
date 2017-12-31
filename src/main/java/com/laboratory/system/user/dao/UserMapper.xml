@@ -24,11 +24,11 @@
     <insert id="insert" parameterType="userModel" >
         insert into lab_user (id, user_name, name,
         age, password, phone,
-        status, type, create_time,
+        status,is_delete, type, create_time,
         update_time, memo)
         values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
         #{age,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
-        #{status,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{status,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
         #{updateTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR})
     </insert>
     <!--有选择性的插入-->
@@ -55,6 +55,9 @@
             </if>
             <if test="status != null" >
                 status,
+            </if>
+            <if test="isDelete != null" >
+                is_delete,
             </if>
             <if test="type != null" >
                 type,
@@ -85,6 +88,9 @@
             </if>
             <if test="phone != null" >
                 #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
             </if>
             <if test="status != null" >
                 #{status,jdbcType=VARCHAR},
