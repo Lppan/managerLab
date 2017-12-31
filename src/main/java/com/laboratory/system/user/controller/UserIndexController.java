@@ -37,52 +37,34 @@ public class UserIndexController {
     @RequestMapping(value= "/login" , produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String login(HttpServletRequest request){
-        ResponseModel responseModel = new ResponseModel();
         net.sf.json.JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
-        Map<String,Object> paramMap = net.sf.json.JSONObject.fromObject(jsonParams);
-        if (null != paramMap && paramMap.containsKey("userName") && paramMap.containsKey("password")){
+        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
+        ResponseModel responseModel = checkUserNameAndPassword(paramMap);
+        if (null != responseModel){
+            JSONObject jsonObject = JSONObject.fromObject(responseModel);
+            return jsonObject.toString();
+        }else{
             //根据用户名查询是否有该用户
             String username = paramMap.get("userName").toString();
             String password = paramMap.get("password").toString();
             logger.info("登录用户名："+username+"登录密码："+password);
-            if(null != username &&  !"".equals(username) && null != password && !"".equals(password)){
-                try{
-                    List<User> users = userService.selectUserByUserName(paramMap);
-                if(null != users && users.size() > 0){
-                    User user = users.get(0);
-                    if(user.getPassword().equals(MD5Utils.encode(password)) && user.getUserName().equals(username)){
-                        //用户名密码正确
-    //                    UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-    //                    Subject currentUser = SecurityUtils.getSubject();
-    //                    currentUser.login(token);
-                        //获取权限信息
 
-                        responseModel.setStatus(LabConstant.LabLogin.LOGIN_SUCCESS_CODE);
-                        //responseModel.setCode(LabConstant.LabLogin.LOGIN_SUCCESS);
-                        responseModel.setMessage(LabConstant.LabLogin.LOGIN_SUCCESS_MESSAGE);
-
-                    }else{
-                        //用户名密码不正确
-                        responseModel.setStatus(LabConstant.LabLogin.LOGIN_FAILED_CODE);
-                        //responseModel.setCode(LabConstant.LabLogin.LOGIN_FAILED);
-                        responseModel.setMessage(LabConstant.LabLogin.LOGIN_FAILED_MESSAGE);
-                    }
+            List<User> users = userService.selectUserByUserName(paramMap);
+            if(null != users && users.size() > 0){
+                User user = users.get(0);
+                if(user.getPassword().equals(MD5Utils.encode(password)) && user.getUserName().equals(username)){
+                    //用户名密码正确
+                    responseModel.setStatus(LabConstant.LabLogin.LOGIN_SUCCESS_CODE);
+                    responseModel.setMessage(LabConstant.LabLogin.LOGIN_SUCCESS_MESSAGE);
                 }else{
-                    //用户不存在
-                    responseModel.setStatus(LabConstant.LabLogin.LOGIN_ERROR_CODE);
-                    //responseModel.setCode(LabConstant.LabLogin.LOGIN_ERROR);
-                    responseModel.setMessage(LabConstant.LabLogin.LOGIN_ERROR_MESSAGE);
-                }
-                }catch (Exception e){
+                    //用户名密码不正确
                     responseModel.setStatus(LabConstant.LabLogin.LOGIN_FAILED_CODE);
-                    //responseModel.setCode(LabConstant.LabLogin.LOGIN_FAILED);
                     responseModel.setMessage(LabConstant.LabLogin.LOGIN_FAILED_MESSAGE);
                 }
             }else{
-                    //用户名或密码不能为空
-                responseModel.setStatus(LabConstant.LabLogin.LOGIN_EMPTY_CODE);
-                //responseModel.setCode(LabConstant.LabLogin.LOGIN_EMPTY);
-                responseModel.setMessage(LabConstant.LabLogin.LOGIN_EMPTY_MESSAGE);
+                //用户不存在
+                responseModel.setStatus(LabConstant.LabLogin.LOGIN_ERROR_CODE);
+                responseModel.setMessage(LabConstant.LabLogin.LOGIN_ERROR_MESSAGE);
             }
         }
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
@@ -90,6 +72,25 @@ public class UserIndexController {
         return jsonObject.toString();
     }
 
+    public ResponseModel checkUserNameAndPassword(Map<String,Object> paramMap){
+        ResponseModel responseModel = new ResponseModel();
+        if (null != paramMap && !paramMap.isEmpty()){
+            if (paramMap.containsKey("userName") && null != paramMap.get("userName") && !"".equals(paramMap.get("userName"))){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":用户名不能为空");
+                return responseModel;
+            }
+            if (paramMap.containsKey("password") && null != paramMap.get("password") && !"".equals(paramMap.get("password"))){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":密码不能为空");
+                return responseModel;
+            }
+        }else{
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE);
+        }
+        return responseModel;
+    }
 
 
 }

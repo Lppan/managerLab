@@ -8,14 +8,14 @@ package com.laboratory.utils;/**
  */
 public class LabConstant {
     public static class LabLogin{
+
+        //系统默认密码
+        public static final String DEFAULT_PASSWORD = "123456";
+
         public static final int LOGIN_SUCCESS_CODE = 0000;
         public static final int LOGIN_FAILED_CODE = 0001;
         public static final int LOGIN_ERROR_CODE = 0002;
         public static final int LOGIN_EMPTY_CODE = 0003;
-//        public static final String LOGIN_SUCCESS = "SUCCESS";
-//        public static final String LOGIN_FAILED= "FAILD";
-//        public static final String LOGIN_ERROR= "ERROR";
-//        public static final String LOGIN_EMPTY= "EMPTY";
         public static final String LOGIN_SUCCESS_MESSAGE = "登录成功";
         public static final String LOGIN_FAILED_MESSAGE = "用户名或密码不正确";
         public static final String LOGIN_ERROR_MESSAGE = "用户不存在";
