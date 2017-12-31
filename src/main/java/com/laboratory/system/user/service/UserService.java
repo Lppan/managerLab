@@ -27,14 +27,16 @@ public class UserService {
     @Autowired
     private UserMapper userDao;
 
+    /**
+     * 添加用户
+     * @param paramMap
+     * @return
+     */
     public ResponseModel insert(Map<String , Object> paramMap) {
-        ResponseModel responseModel = new ResponseModel();
-        if (paramMap.containsKey("password") && null != paramMap.get("password") && !"".equals(paramMap.get("password"))) {
-            paramMap.put("password", MD5Utils.encode(paramMap.get("password").toString()));
-        } else {
-            //密码为空
-            responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-            responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":密码不能为空");
+        paramMap.put("password",LabConstant.LabLogin.DEFAULT_PASSWORD);
+        ResponseModel responseModel = checkUserMust(paramMap);
+        if (responseModel != null){
+            return  responseModel;
         }
         try {
             List<User> users = userDao.selectUserByUserName(paramMap);
@@ -58,7 +60,12 @@ public class UserService {
         }
         return responseModel;
     }
-    //根据主键id删除
+
+    /**
+     * 根据主键id删除
+     * @param id
+     * @return
+     */
     public ResponseModel deleteByPrimaryKey(Integer id){
         ResponseModel responseModel = new ResponseModel();
         int i = userDao.deleteByPrimaryKey(id);
@@ -72,7 +79,12 @@ public class UserService {
         }
         return responseModel;
     }
-    //根据id进行查询
+
+    /**
+     * 根据id进行查询
+     * @param id
+     * @return
+     */
     public ResponseModel selectByPrimaryKey(Integer id){
         ResponseModel responseModel = new ResponseModel();
         User user = userDao.selectByPrimaryKey(id);
@@ -89,17 +101,25 @@ public class UserService {
         return responseModel;
     }
 
-    //根据主键字段选择性的更新
+    /**
+     * 根据主键字段选择性的更新
+     * @param paramMap
+     * @return
+     */
     public ResponseModel updateByPrimaryKeySelective(Map<String,Object> paramMap){
-        ResponseModel responseModel = new ResponseModel();
-        if (paramMap.containsKey("password") && null != paramMap.get("password") && !"".equals(paramMap.get("password"))) {
-            paramMap.put("password", MD5Utils.encode(paramMap.get("password").toString()));
-        } else {
-            //密码为空
-
+        ResponseModel responseModel = checkUserMust(paramMap);
+        if (null != responseModel.getStatus()){
+            return responseModel;
         }
-        int updatesattus = userDao.updateByPrimaryKeySelective(paramMap);
-        if(updatesattus > 0 ){
+        List<User> users = userDao.selectUserByUserName(paramMap);
+        if (null != users && users.size()>0){
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_EXIST_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_EXIST_MESSAGE);
+            return responseModel;
+        }
+        paramMap.put("password",MD5Utils.encode(paramMap.get("password").toString()));
+        int updatestatus = userDao.updateByPrimaryKeySelective(paramMap);
+        if(updatestatus > 0 ){
             responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
             responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
         }else{
@@ -156,8 +176,60 @@ public class UserService {
         }
         return responseModel;
     }
-    //分查询总记录数
-    public int selectAllByPageCount(Map<String,Object> paramMap){
-        return userDao.selectAllByPageCount(paramMap);
+
+
+    public ResponseModel checkUserMust(Map<String,Object> paramMap){
+        ResponseModel responseModel = new ResponseModel();
+        if (null != paramMap && !paramMap.isEmpty()){
+            if (paramMap.containsKey("password") && null == paramMap.get("password") ||"".equals(paramMap.get("password"))){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":密码不能为空");
+                return responseModel;
+            }else if ( !paramMap.containsKey("password")){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":密码不能为空");
+                return responseModel;
+            }
+            if (paramMap.containsKey("userName") && "".equals(paramMap.get("userName")) || null == paramMap.get("userName")){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":用户名不能为空");
+                return responseModel;
+            }else if ( !paramMap.containsKey("userName")){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":用户名不能为空");
+                return responseModel;
+            }
+            if (paramMap.containsKey("type") && (null == paramMap.get("type").toString() || "".equals(paramMap.get("type").toString()))){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":用户类型不能为空");
+                return responseModel;
+            }else if ( !paramMap.containsKey("type")){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":用户类型不能为空");
+                return responseModel;
+            }
+            if (paramMap.containsKey("status") && (null == paramMap.get("status").toString() || "".equals(paramMap.get("status").toString()))){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":用户状态不能为空");
+                return responseModel;
+            } else if ( !paramMap.containsKey("status")){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":用户状态不能为空");
+                return responseModel;
+            }
+            if (paramMap.containsKey("status") && (null == paramMap.get("status").toString() || "".equals(paramMap.get("status").toString()))){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":id不能为空");
+                return responseModel;
+            }else if ( !paramMap.containsKey("status")){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":id不能为空");
+                return responseModel;
+            }
+        }else{
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE);
+        }
+        return responseModel;
     }
 }

@@ -26,6 +26,8 @@ public class User extends BaseModel{
 
     private String status;
 
+    private String isDelete;
+
     private String type;
 
     private Date createTime;
@@ -87,7 +89,15 @@ public class User extends BaseModel{
     }
 
     public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+        this.status = status;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
     }
 
     public String getType() {

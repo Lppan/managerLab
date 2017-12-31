@@ -118,6 +118,7 @@ RESPONSE
 
 //查询所有用户
 
+/system/user/getUserList
 REQUEST
 {
 
@@ -184,14 +185,60 @@ RESPONSE
     "message": "操作成功",
     "pageMap": {
         "next": 1,
-        "pageTotal": 1,
+        "pageTotal": 1, //总页数
         "previous": 1,
         "last": 1,
-        "pageStart": 0,
-        "count": 8,
-        "pageSize": 10,
+        "pageStart": 0, 起始页
+        "count": 8,     总记录数
+        "pageSize": 10,  一页显示条数
         "page": 1,
         "first": "1"
     },
     "status": 0
 }
+
+//修改用户
+/system/user/updateUser
+{
+    "id":34,
+    "age":28,
+    "memo":"tests",
+    "name":"tests",
+    "password":"1234",
+    "phone":"18532541785",
+    "status":"1",
+    "type":"2",
+    "userName":"李四四"
+}
+//成功
+{
+    "data":"",
+    "message":"操作成功",
+    "pageMap":{},
+    "status":0
+}
+//密码为空
+{
+    "data": "",
+    "message": "必要参数不能为空:密码不能为空",
+    "pageMap": {},
+    "status": 3
+}
+//用户名为空
+{
+
+}
+
+项目模块接口
+
+获取项目列表
+/projectInfo/projectList
+
+REQUEST
+{
+    "projectName":"",
+    "projectPrincipal","",
+    ""
+
+}
+
