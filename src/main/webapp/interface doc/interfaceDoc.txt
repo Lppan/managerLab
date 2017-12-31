@@ -467,5 +467,51 @@ RESPONSE
     "status": 0
 }
 
+//修改项目
+
+/projectInfo/updateProject
+
+REQUEST
+{
+	"projectNo":"LWSY-201712060301",
+    "standard": "3",
+    "stoke": "1",
+    "parentProjectName": "123",
+    "machineNoList": "12",
+    "fuelSystem": "2",
+    "propertyCharacterList": "123",
+    "dais": 2,
+    "memo": "1",
+    "egr": "3",
+    "planBeginTime": 1514692180000,
+    "machineNo": "123",
+    "rotateSpeed": 123,
+    "powerRate": 123,
+    "valueNo": "2",
+    "intake": "1",
+    "torsionSpace": 12,
+    "machineType": "123",
+    "speedPointTotal": 122,
+    "isStoppage": "1",
+    "projectContent": 1,
+    "projectPrincipal": "123",
+    "importanceLevel": "123",
+    "midleCooling": "3",
+    "oilConsumeSign": 12,
+    "speedPointTotalHight": "3",
+    "speedPointTotalLimit": "1",
+    "projectCycle": "12",
+    "planEndTime": 1514692172000,
+    "oilConsumeLow": 12,
+    "projectName": "王八蛋",
+    "operationInstruction": "123",
+    "status": "1"
+}
+
+RESPONSE
+{
+
+}
+
 
 
