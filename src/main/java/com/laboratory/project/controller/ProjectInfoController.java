@@ -18,7 +18,7 @@ import java.util.Map;
  * Created by shipan on 2017/12/28.
  */
 @Controller
-@RequestMapping("/projectInfo")
+@RequestMapping(value = "/projectInfo",produces = "application/json;charset=UTF-8")
 public class ProjectInfoController {
 
     private Logger logger = Logger.getLogger(ProjectInfoController.class);
