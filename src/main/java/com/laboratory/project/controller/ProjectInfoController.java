@@ -84,11 +84,10 @@ public class ProjectInfoController {
     @RequestMapping("/updateProject")
     @ResponseBody
     public String updateProject(HttpServletRequest request){
-        ResponseModel responseModel = new ResponseModel();
         JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
         logger.info("更新项目："+projectMap.toString());
-        responseModel = projectInfoService.updateByPrimaryKeySelective(projectMap);
+        ResponseModel responseModel = projectInfoService.updateByPrimaryKeySelective(projectMap);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
         return jsonObject.toString();
     }
