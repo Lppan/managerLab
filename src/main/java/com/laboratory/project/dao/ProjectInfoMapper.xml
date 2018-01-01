@@ -3,6 +3,7 @@
 <mapper namespace="com.laboratory.project.dao.ProjectInfoMapper">
   <resultMap id="BaseResultMap" type="com.laboratory.project.model.ProjectInfo">
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="project_no" property="projectNo" jdbcType="VARCHAR" />
     <result column="project_name" property="projectName" jdbcType="VARCHAR" />
     <result column="parent_project_name" property="parentProjectName" jdbcType="VARCHAR" />
     <result column="project_principal" property="projectPrincipal" jdbcType="VARCHAR" />
@@ -10,10 +11,20 @@
     <result column="machine_no" property="machineNo" jdbcType="VARCHAR" />
     <result column="power_rate" property="powerRate" jdbcType="REAL" />
     <result column="rotate_speed" property="rotateSpeed" jdbcType="INTEGER" />
-    <result column="oil_consume_sign" property="oilConsumeSign" jdbcType="INTEGER" />
+    <result column="oil_consume_sign" property="oilConsumeSign" jdbcType="REAL" />
     <result column="torsion_space" property="torsionSpace" jdbcType="INTEGER" />
     <result column="oil_consume_low" property="oilConsumeLow" jdbcType="INTEGER" />
     <result column="speed_point_total" property="speedPointTotal" jdbcType="INTEGER" />
+    <result column="map_picture" property="mapPicture" jdbcType="VARCHAR" />
+    <result column="standard" property="standard" jdbcType="VARCHAR" />
+    <result column="egr" property="egr" jdbcType="VARCHAR" />
+    <result column="fuel_system" property="fuelSystem" jdbcType="VARCHAR" />
+    <result column="intake" property="intake" jdbcType="VARCHAR" />
+    <result column="midle_cooling" property="midleCooling" jdbcType="VARCHAR" />
+    <result column="value_no" property="valueNo" jdbcType="INTEGER" />
+    <result column="speed_point_total_limit" property="speedPointTotalLimit" jdbcType="VARCHAR" />
+    <result column="speed_point_total_hight" property="speedPointTotalHight" jdbcType="VARCHAR" />
+    <result column="stoke" property="stoke" jdbcType="VARCHAR" />
     <result column="importance_level" property="importanceLevel" jdbcType="VARCHAR" />
     <result column="plan_begin_time" property="planBeginTime" jdbcType="TIMESTAMP" />
     <result column="plan_end_time" property="planEndTime" jdbcType="TIMESTAMP" />
@@ -30,15 +41,17 @@
     <result column="memo" property="memo" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, project_name, parent_project_name, project_principal, machine_type, machine_no, 
-    power_rate, rotate_speed, oil_consume_sign, torsion_space, oil_consume_low, speed_point_total, 
-    importance_level, plan_begin_time, plan_end_time, project_cycle, project_content, 
-    operation_instruction, property_character_list, machine_no_list, dais, status, is_stoppage, 
-    create_time, update_time, memo
+    id, project_no, project_name, parent_project_name, project_principal, machine_type,
+    machine_no, power_rate, rotate_speed, oil_consume_sign, torsion_space, oil_consume_low,
+    speed_point_total, map_picture, standard, egr, fuel_system, intake, midle_cooling,
+    value_no, speed_point_total_limit, speed_point_total_hight, stoke, importance_level,
+    plan_begin_time, plan_end_time, project_cycle, project_content, operation_instruction,
+    property_character_list, machine_no_list, dais, status, is_stoppage, create_time,
+    update_time, memo
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
-    <include refid="Base_Column_List" />
+    *
     from lab_project_info
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -47,30 +60,41 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="projectInfo" >
-    insert into lab_project_info (id, project_name, parent_project_name, 
-      project_principal, machine_type, machine_no, 
-      power_rate, rotate_speed, oil_consume_sign, 
-      torsion_space, oil_consume_low, speed_point_total, 
-      importance_level, plan_begin_time, plan_end_time, 
-      project_cycle, project_content, operation_instruction, 
-      property_character_list, machine_no_list, dais, 
-      status, is_stoppage, create_time, 
-      update_time, memo)
-    values (#{id,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{parentProjectName,jdbcType=VARCHAR}, 
-      #{projectPrincipal,jdbcType=VARCHAR}, #{machineType,jdbcType=VARCHAR}, #{machineNo,jdbcType=VARCHAR}, 
-      #{powerRate,jdbcType=REAL}, #{rotateSpeed,jdbcType=INTEGER}, #{oilConsumeSign,jdbcType=INTEGER}, 
-      #{torsionSpace,jdbcType=INTEGER}, #{oilConsumeLow,jdbcType=INTEGER}, #{speedPointTotal,jdbcType=INTEGER}, 
-      #{importanceLevel,jdbcType=VARCHAR}, #{planBeginTime,jdbcType=TIMESTAMP}, #{planEndTime,jdbcType=TIMESTAMP}, 
-      #{projectCycle,jdbcType=VARCHAR}, #{projectContent,jdbcType=INTEGER}, #{operationInstruction,jdbcType=VARCHAR}, 
-      #{propertyCharacterList,jdbcType=VARCHAR}, #{machineNoList,jdbcType=VARCHAR}, #{dais,jdbcType=INTEGER}, 
-      #{status,jdbcType=VARCHAR}, #{isStoppage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR})
+     insert into lab_project_info (id, project_no, project_name,
+      parent_project_name, project_principal, machine_type,
+      machine_no, power_rate, rotate_speed,
+      oil_consume_sign, torsion_space, oil_consume_low,
+      speed_point_total, map_picture, standard,
+      egr, fuel_system, intake,
+      midle_cooling, value_no, speed_point_total_limit,
+      speed_point_total_hight, stoke, importance_level,
+      plan_begin_time, plan_end_time, project_cycle,
+      project_content, operation_instruction, property_character_list,
+      machine_no_list, dais, status,
+      is_stoppage, create_time, update_time,
+      memo)
+    values (#{id,jdbcType=INTEGER}, #{projectNo,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR},
+      #{parentProjectName,jdbcType=VARCHAR}, #{projectPrincipal,jdbcType=VARCHAR}, #{machineType,jdbcType=VARCHAR},
+      #{machineNo,jdbcType=VARCHAR}, #{powerRate,jdbcType=REAL}, #{rotateSpeed,jdbcType=INTEGER},
+      #{oilConsumeSign,jdbcType=REAL}, #{torsionSpace,jdbcType=INTEGER}, #{oilConsumeLow,jdbcType=INTEGER},
+      #{speedPointTotal,jdbcType=INTEGER}, #{mapPicture,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR},
+      #{egr,jdbcType=VARCHAR}, #{fuelSystem,jdbcType=VARCHAR}, #{intake,jdbcType=VARCHAR},
+      #{midleCooling,jdbcType=VARCHAR}, #{valueNo,jdbcType=INTEGER}, #{speedPointTotalLimit,jdbcType=VARCHAR},
+      #{speedPointTotalHight,jdbcType=VARCHAR}, #{stoke,jdbcType=VARCHAR}, #{importanceLevel,jdbcType=VARCHAR},
+      #{planBeginTime,jdbcType=TIMESTAMP}, #{planEndTime,jdbcType=TIMESTAMP}, #{projectCycle,jdbcType=VARCHAR},
+      #{projectContent,jdbcType=INTEGER}, #{operationInstruction,jdbcType=VARCHAR}, #{propertyCharacterList,jdbcType=VARCHAR},
+      #{machineNoList,jdbcType=VARCHAR}, #{dais,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR},
+      #{isStoppage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{memo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="java.util.Map" >
     insert into lab_project_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="projectNo != null" >
+        project_no,
       </if>
       <if test="projectName != null" >
         project_name,
@@ -105,6 +129,36 @@
       <if test="speedPointTotal != null" >
         speed_point_total,
       </if>
+      <if test="mapPicture != null" >
+        map_picture,
+      </if>
+      <if test="standard != null" >
+        standard,
+      </if>
+      <if test="egr != null" >
+        egr,
+      </if>
+      <if test="fuelSystem != null" >
+        fuel_system,
+      </if>
+      <if test="intake != null" >
+        intake,
+      </if>
+      <if test="midleCooling != null" >
+        midle_cooling,
+      </if>
+      <if test="valueNo != null" >
+        value_no,
+      </if>
+      <if test="speedPointTotalLimit != null" >
+        speed_point_total_limit,
+      </if>
+      <if test="speedPointTotalHight != null" >
+        speed_point_total_hight,
+      </if>
+      <if test="stoke != null" >
+        stoke,
+      </if>
       <if test="importanceLevel != null" >
         importance_level,
       </if>
@@ -138,9 +192,7 @@
       <if test="isStoppage != null" >
         is_stoppage,
       </if>
-
         create_time,
-
       <if test="updateTime != null" >
         update_time,
       </if>
@@ -151,6 +203,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="projectNo != null" >
+        #{projectNo,jdbcType=VARCHAR},
       </if>
       <if test="projectName != null" >
         #{projectName,jdbcType=VARCHAR},
@@ -184,6 +239,36 @@
       </if>
       <if test="speedPointTotal != null" >
         #{speedPointTotal,jdbcType=INTEGER},
+      </if>
+      <if test="mapPicture != null" >
+        #{mapPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="egr != null" >
+        #{egr,jdbcType=VARCHAR},
+      </if>
+      <if test="fuelSystem != null" >
+        #{fuelSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="intake != null" >
+        #{intake,jdbcType=VARCHAR},
+      </if>
+      <if test="midleCooling != null" >
+        #{midleCooling,jdbcType=VARCHAR},
+      </if>
+      <if test="valueNo != null" >
+        #{valueNo,jdbcType=INTEGER},
+      </if>
+      <if test="speedPointTotalLimit != null" >
+        #{speedPointTotalLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="speedPointTotalHight != null" >
+        #{speedPointTotalHight,jdbcType=VARCHAR},
+      </if>
+      <if test="stoke != null" >
+        #{stoke,jdbcType=VARCHAR},
       </if>
       <if test="importanceLevel != null" >
         #{importanceLevel,jdbcType=VARCHAR},
@@ -230,6 +315,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="java.util.Map">
     update lab_project_info
     <set >
+      <if test="projectNo != null" >
+        project_no = #{projectNo,jdbcType=VARCHAR},
+      </if>
       <if test="projectName != null" >
         project_name = #{projectName,jdbcType=VARCHAR},
       </if>
@@ -262,6 +350,36 @@
       </if>
       <if test="speedPointTotal != null" >
         speed_point_total = #{speedPointTotal,jdbcType=INTEGER},
+      </if>
+      <if test="mapPicture != null" >
+        map_picture = #{mapPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="standard != null" >
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="egr != null" >
+        egr = #{egr,jdbcType=VARCHAR},
+      </if>
+      <if test="fuelSystem != null" >
+        fuel_system = #{fuelSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="intake != null" >
+        intake = #{intake,jdbcType=VARCHAR},
+      </if>
+      <if test="midleCooling != null" >
+        midle_cooling = #{midleCooling,jdbcType=VARCHAR},
+      </if>
+      <if test="valueNo != null" >
+        value_no = #{valueNo,jdbcType=INTEGER},
+      </if>
+      <if test="speedPointTotalLimit != null" >
+        speed_point_total_limit = #{speedPointTotalLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="speedPointTotalHight != null" >
+        speed_point_total_hight = #{speedPointTotalHight,jdbcType=VARCHAR},
+      </if>
+      <if test="stoke != null" >
+        stoke = #{stoke,jdbcType=VARCHAR},
       </if>
       <if test="importanceLevel != null" >
         importance_level = #{importanceLevel,jdbcType=VARCHAR},
@@ -308,17 +426,28 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="projectInfo" >
     update lab_project_info
-    set project_name = #{projectName,jdbcType=VARCHAR},
+    set project_no = #{projectNo,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
       parent_project_name = #{parentProjectName,jdbcType=VARCHAR},
       project_principal = #{projectPrincipal,jdbcType=VARCHAR},
       machine_type = #{machineType,jdbcType=VARCHAR},
       machine_no = #{machineNo,jdbcType=VARCHAR},
       power_rate = #{powerRate,jdbcType=REAL},
       rotate_speed = #{rotateSpeed,jdbcType=INTEGER},
-      oil_consume_sign = #{oilConsumeSign,jdbcType=INTEGER},
+      oil_consume_sign = #{oilConsumeSign,jdbcType=REAL},
       torsion_space = #{torsionSpace,jdbcType=INTEGER},
       oil_consume_low = #{oilConsumeLow,jdbcType=INTEGER},
       speed_point_total = #{speedPointTotal,jdbcType=INTEGER},
+      map_picture = #{mapPicture,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      egr = #{egr,jdbcType=VARCHAR},
+      fuel_system = #{fuelSystem,jdbcType=VARCHAR},
+      intake = #{intake,jdbcType=VARCHAR},
+      midle_cooling = #{midleCooling,jdbcType=VARCHAR},
+      value_no = #{valueNo,jdbcType=INTEGER},
+      speed_point_total_limit = #{speedPointTotalLimit,jdbcType=VARCHAR},
+      speed_point_total_hight = #{speedPointTotalHight,jdbcType=VARCHAR},
+      stoke = #{stoke,jdbcType=VARCHAR},
       importance_level = #{importanceLevel,jdbcType=VARCHAR},
       plan_begin_time = #{planBeginTime,jdbcType=TIMESTAMP},
       plan_end_time = #{planEndTime,jdbcType=TIMESTAMP},
