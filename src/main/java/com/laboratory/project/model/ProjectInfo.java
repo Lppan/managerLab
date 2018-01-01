@@ -10,6 +10,8 @@ public class ProjectInfo extends BaseModel{
 
     private Integer id;
 
+    private String projectNo;                    //项目编号
+
     private String projectName;                 //项目名
 
     private String parentProjectName;           //所属项目
@@ -28,9 +30,29 @@ public class ProjectInfo extends BaseModel{
 
     private Integer torsionSpace;               //最大扭矩
 
-    private Integer oilConsumeLow;              //
+    private Integer oilConsumeLow;              //最低油耗
 
     private Integer speedPointTotal;            //怠速点
+
+    private String mapPicture;                  //map图
+
+    private String standard;                    //排放标准
+
+    private String egr;                         //EGR
+
+    private String fuelSystem;                  //燃油系统
+
+    private String intake;                      //进气方式
+
+    private String midleCooling;                //中冷方式
+
+    private Integer valueNo;                    //气门数
+
+    private String speedPointTotalLimit;        //高怠速
+
+    private String speedPointTotalHight;        //低怠速
+
+    private String stoke;                       //缸径冲程
 
     private String importanceLevel;             //项目重要度
 
@@ -66,6 +88,14 @@ public class ProjectInfo extends BaseModel{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(String projectNo) {
+        this.projectNo = projectNo;
     }
 
     public String getProjectName() {
@@ -154,6 +184,86 @@ public class ProjectInfo extends BaseModel{
 
     public void setSpeedPointTotal(Integer speedPointTotal) {
         this.speedPointTotal = speedPointTotal;
+    }
+
+    public String getMapPicture() {
+        return mapPicture;
+    }
+
+    public void setMapPicture(String mapPicture) {
+        this.mapPicture = mapPicture;
+    }
+
+    public String getStandard() {
+        return standard;
+    }
+
+    public void setStandard(String standard) {
+        this.standard = standard;
+    }
+
+    public String getEgr() {
+        return egr;
+    }
+
+    public void setEgr(String egr) {
+        this.egr = egr;
+    }
+
+    public String getFuelSystem() {
+        return fuelSystem;
+    }
+
+    public void setFuelSystem(String fuelSystem) {
+        this.fuelSystem = fuelSystem;
+    }
+
+    public String getIntake() {
+        return intake;
+    }
+
+    public void setIntake(String intake) {
+        this.intake = intake;
+    }
+
+    public String getMidleCooling() {
+        return midleCooling;
+    }
+
+    public void setMidleCooling(String midleCooling) {
+        this.midleCooling = midleCooling;
+    }
+
+    public Integer getValueNo() {
+        return valueNo;
+    }
+
+    public void setValueNo(Integer valueNo) {
+        this.valueNo = valueNo;
+    }
+
+    public String getSpeedPointTotalLimit() {
+        return speedPointTotalLimit;
+    }
+
+    public void setSpeedPointTotalLimit(String speedPointTotalLimit) {
+        this.speedPointTotalLimit = speedPointTotalLimit;
+    }
+
+    public String getSpeedPointTotalHight() {
+        return speedPointTotalHight;
+    }
+
+    public void setSpeedPointTotalHight(String speedPointTotalHight) {
+        this.speedPointTotalHight = speedPointTotalHight;
+    }
+
+    public String getStoke() {
+        return stoke;
+    }
+
+    public void setStoke(String stoke) {
+        this.stoke = stoke;
     }
 
     public String getImportanceLevel() {
