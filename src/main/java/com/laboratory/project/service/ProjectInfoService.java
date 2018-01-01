@@ -3,6 +3,7 @@ package com.laboratory.project.service;
 import com.laboratory.labport.model.ResponseModel;
 import com.laboratory.project.dao.ProjectInfoMapper;
 import com.laboratory.project.model.ProjectInfo;
+import com.laboratory.utils.DateConversionUtils;
 import com.laboratory.utils.LabConstant;
 import com.laboratory.utils.MapUtils;
 import com.laboratory.utils.PageUtils;
@@ -34,7 +35,7 @@ public class ProjectInfoService {
         ResponseModel responseModel = new ResponseModel();
         if (null != paramMap && !paramMap.isEmpty()){
             int pageCount = projectInfoMapper.selectProjectAllCount(paramMap);
-            paramMap.put("cpunt",pageCount);
+            paramMap.put("count",pageCount);
             List<ProjectInfo> projectInfoList = projectInfoMapper.selectProjectAllByPage(PageUtils.Page(request,paramMap));
             Map<String,Object> pageMap = new HashMap<String,Object>();
             pageMap.put("count",pageCount);
@@ -64,9 +65,13 @@ public class ProjectInfoService {
 
     public ResponseModel insertSelective(Map<String,Object> projectMap){
         ResponseModel responseModel = checkProjectMust(projectMap);
-        if (null != responseModel){
+        if (null != responseModel.getStatus()){
             return responseModel;
         }else{
+            String planBeginTime = DateConversionUtils.valueToDate((Long)projectMap.get("planBeginTime"));
+            String planEndTime = DateConversionUtils.valueToDate((Long)projectMap.get("planEndTime"));
+            projectMap.put("planBeginTime",planBeginTime);
+            projectMap.put("planEndTime",planEndTime);
             int selective = projectInfoMapper.insertSelective(projectMap);
             if(selective > 0){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
@@ -101,10 +106,11 @@ public class ProjectInfoService {
         ResponseModel responseModel = new ResponseModel();
         if(null != id && !"".equals(id)){
             ProjectInfo projectInfo = projectInfoMapper.selectByPrimaryKey(id);
+            Map projectMap = MapUtils.getValue(projectInfo);
             if(null != projectInfo){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
-                responseModel.setData(projectInfo);
+                responseModel.setData(projectMap);
             }else{
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MESSAGE);
@@ -121,6 +127,10 @@ public class ProjectInfoService {
         if (null != responseModel){
             return responseModel;
         }else{
+            String planBeginTime = DateConversionUtils.valueToDate((Long)projectMap.get("planBeginTime"));
+            String planEndTime = DateConversionUtils.valueToDate((Long)projectMap.get("planEndTime"));
+            projectMap.put("planBeginTime",planBeginTime);
+            projectMap.put("planEndTime",planEndTime);
             int keySelective = projectInfoMapper.updateByPrimaryKeySelective(projectMap);
             if(keySelective >0){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
