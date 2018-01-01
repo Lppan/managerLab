@@ -37,6 +37,7 @@ public class ProjectInfoService {
             int pageCount = projectInfoMapper.selectProjectAllCount(paramMap);
             paramMap.put("count",pageCount);
             List<ProjectInfo> projectInfoList = projectInfoMapper.selectProjectAllByPage(PageUtils.Page(request,paramMap));
+            logger.info("根据id查询结果："+projectInfoList);
             Map<String,Object> pageMap = new HashMap<String,Object>();
             pageMap.put("count",pageCount);
             PageUtils.calculate(pageMap);
