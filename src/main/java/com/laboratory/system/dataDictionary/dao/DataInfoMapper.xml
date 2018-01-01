@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.laboratory.system.dataDictionary.dao.DataInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.laboratory.system.dataDictionary.model.DataInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="experiment_name" property="experimentName" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from lab_data_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from lab_data_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="dataInfo" >
+    insert into lab_data_info (id, experiment_name, parent_id, 
+      type, memo)
+    values (#{id,jdbcType=INTEGER}, #{experimentName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{type,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dataInfo" >
+    insert into lab_data_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="experimentName != null" >
+        experiment_name,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="experimentName != null" >
+        #{experimentName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dataInfo" >
+    update lab_data_info
+    <set >
+      <if test="experimentName != null" >
+        experiment_name = #{experimentName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dataInfo" >
+    update lab_data_info
+    set experiment_name = #{experimentName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectDataDictionary" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT id,experiment_name experimentName FROM lab_data_info WHERE 1=1
+    <if test="parentId != null ">
+      AND parent_id=#{parentId}
+    </if>
+    <if test="type != null and type !=''">
+      AND type=#{type}
+    </if>
+  </select>
+</mapper>

@@ -21,6 +21,7 @@
             <typeAlias type="com.laboratory.project.model.ProjectInfo" alias="projectInfo"></typeAlias>
             <typeAlias type="com.laboratory.stoppage.model.DataStopPage" alias="dataStopPage"></typeAlias>
             <typeAlias type="com.laboratory.laboratory.model.Laboratory" alias="laboratory"></typeAlias>
+            <typeAlias type="com.laboratory.system.dataDictionary.model.DataInfo" alias="dataInfo"></typeAlias>
 
     </typeAliases>
 

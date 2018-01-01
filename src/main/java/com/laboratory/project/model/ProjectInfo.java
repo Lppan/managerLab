@@ -10,7 +10,7 @@ public class ProjectInfo extends BaseModel{
 
     private Integer id;
 
-    private String projectNo;                    //项目编号
+    private String projectNo;                   //项目编号
 
     private String projectName;                 //项目名
 
@@ -62,7 +62,7 @@ public class ProjectInfo extends BaseModel{
 
     private String projectCycle;                //项目周期
 
-    private Integer projectContent;             //
+    private Integer projectContent;             //实验内容
 
     private String operationInstruction;
 
