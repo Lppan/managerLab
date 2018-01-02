@@ -80,6 +80,8 @@ public class ProjectInfo extends BaseModel{
 
     private Date updateTime;
 
+    private String isDelete;
+
     private String memo;
 
     public Integer getId() {
@@ -368,6 +370,14 @@ public class ProjectInfo extends BaseModel{
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
     }
 
     public String getMemo() {
