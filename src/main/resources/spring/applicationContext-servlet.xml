@@ -39,7 +39,10 @@
         <!--</property>-->
     <!--</bean>-->
     <!--  静态资源映射 因为使用springMVC 拦截的路径是 '/' 所以拦截了所以请求，同时静态资源也被拦截 -->
-
-
-
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+        <property value="utf-8" name="defaultEncoding"/>
+        <property value="10485760000" name="maxUploadSize"/>
+        <property value="409600000" name="maxInMemorySize"/>
+        <property name="resolveLazily" value="true" />
+    </bean>
 </beans>
