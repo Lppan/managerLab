@@ -37,4 +37,12 @@ public class LabConstant {
         public static final String OPERATE_EXIST_MESSAGE = "用户已经存在";
 
     }
+    public class filePath{
+
+        //油耗实验数据路径
+        public static final String FILE_DIRECTORY_PATH_WIN = "D:\\lab\\";
+        public static final String FILE_DIRECTORY_PATH_LINUX = "/lab";
+    }
+
+
 }
