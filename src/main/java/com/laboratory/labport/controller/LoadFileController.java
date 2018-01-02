@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -30,7 +32,7 @@ public class LoadFileController {
     private Logger  logger = Logger.getLogger(LoadFileController.class);
 
     /**
-     * 上传文件
+     * 上传文件(单个文件)
      * @param request
      * @return
      */
@@ -40,7 +42,6 @@ public class LoadFileController {
         ResponseModel responseModel = new ResponseModel();
         String directory = PathUtils.checkDirectory("oil","WIN");
         try {
-            System.out.println(file.getOriginalFilename());
             FileUtils.copyInputStreamToFile(file.getInputStream(),new File(directory,file.getOriginalFilename()));
             //上传成功，记录保存路径
 
@@ -55,10 +56,40 @@ public class LoadFileController {
         return jsonObject.toString();
     }
 
-    public String MuiltUploadFile(HttpServletRequest request, @RequestParam("files")MultipartHttpServletRequest files){
+    /**
+     *  上传文件(批量)
+     * @param request
+     * @param files
+     * @return
+     */
+    @RequestMapping(value  = "/multUploadFile" , method= RequestMethod.POST)
+    @ResponseBody
+    public String MultUploadFile(HttpServletRequest request, MultipartHttpServletRequest files){
         ResponseModel responseModel = new ResponseModel();
-
-
+        Map<String, MultipartFile> fileMap = files.getFileMap();
+        Map<String,String> resultMap= new HashMap<String, String>();
+        String directory = PathUtils.checkDirectory("oil","WIN");
+        for (Map.Entry<String,MultipartFile>  file:fileMap.entrySet()){
+            MultipartFile fileValue = file.getValue();
+            String filename = fileValue.getOriginalFilename();
+            try {
+                FileUtils.copyInputStreamToFile(fileValue.getInputStream(),new File(directory,filename));
+                resultMap.put(filename,"SUCCESS");
+            } catch (IOException e) {
+                resultMap.put(filename,"EXCEPTION");
+                logger.info("上传文件失败;"+filename);
+                e.printStackTrace();
+            }
+        }
+        for (Map.Entry<String,String>  result:resultMap.entrySet()){
+            String value = result.getValue();
+            if (value.equals("EXCEPTION")){
+                resultMap.put(result.getKey(),"上传失败");
+            }
+        }
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_FAILED_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_FAILED_MESSAGE);
+            responseModel.setData(resultMap);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
         return jsonObject.toString();
     }
