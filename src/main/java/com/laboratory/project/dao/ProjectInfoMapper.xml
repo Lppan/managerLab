@@ -38,27 +38,25 @@
     <result column="is_stoppage" property="isStoppage" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, project_no, project_name, parent_project_name, project_principal, machine_type,
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+     id, project_no, project_name, parent_project_name, project_principal, machine_type,
     machine_no, power_rate, rotate_speed, oil_consume_sign, torsion_space, oil_consume_low,
     speed_point_total, map_picture, standard, egr, fuel_system, intake, midle_cooling,
     value_no, speed_point_total_limit, speed_point_total_hight, stoke, importance_level,
     plan_begin_time, plan_end_time, project_cycle, project_content, operation_instruction,
     property_character_list, machine_no_list, dais, status, is_stoppage, create_time,
     update_time, memo
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    *
     from lab_project_info
-    where id = #{id,jdbcType=INTEGER}
+    where is_delete =0 AND id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from lab_project_info
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    UPDATE  lab_project_info SET  is_delete=1  WHERE  id = #{id,jdbcType=INTEGER}
+  </update>
   <insert id="insert" parameterType="projectInfo" >
      insert into lab_project_info (id, project_no, project_name,
       parent_project_name, project_principal, machine_type,
@@ -71,7 +69,7 @@
       plan_begin_time, plan_end_time, project_cycle,
       project_content, operation_instruction, property_character_list,
       machine_no_list, dais, status,
-      is_stoppage, create_time, update_time,
+      is_stoppage, create_time, update_time,is_delete,
       memo)
     values (#{id,jdbcType=INTEGER}, #{projectNo,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR},
       #{parentProjectName,jdbcType=VARCHAR}, #{projectPrincipal,jdbcType=VARCHAR}, #{machineType,jdbcType=VARCHAR},
@@ -84,7 +82,7 @@
       #{planBeginTime,jdbcType=TIMESTAMP}, #{planEndTime,jdbcType=TIMESTAMP}, #{projectCycle,jdbcType=VARCHAR},
       #{projectContent,jdbcType=INTEGER}, #{operationInstruction,jdbcType=VARCHAR}, #{propertyCharacterList,jdbcType=VARCHAR},
       #{machineNoList,jdbcType=VARCHAR}, #{dais,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR},
-      #{isStoppage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{isStoppage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{is_delete,jdbcType=TINYINT},
       #{memo,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="java.util.Map" >
@@ -196,6 +194,7 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+        is_delete,
       <if test="memo != null" >
         memo,
       </if>
@@ -307,6 +306,7 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+        1,
       <if test="memo != null" >
         #{memo,jdbcType=VARCHAR},
       </if>
@@ -418,6 +418,9 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
         update_time = now(),
+      <if test="isDelete != null and isDelete !=''">
+        is_delete=#{isDelete},
+      </if>
       <if test="memo != null" >
         memo = #{memo,jdbcType=VARCHAR},
       </if>
@@ -461,12 +464,25 @@
       is_stoppage = #{isStoppage,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
       memo = #{memo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
   <select id="selectProjectAllByPage" parameterType="java.util.Map" resultType="projectInfo">
-    SELECT * FROM lab_project_info WHERE  1=1
+    SELECT
+    lab1.id,
+    lab1.project_name projectName,
+    lab1.parent_project_name parentProjectName,
+    lab1.project_principal projectPrincipal,
+    lab1.machine_type machineType,
+    lab1.machine_no_list machineNoList,
+    lab1.importance_level importanceLevel,
+    lab1.dais,
+    lab1.plan_begin_time planBeginTime,
+    lab1.status
+    FROM lab_project_info lab1,
+    (SELECT id FROM lab_project_info WHERE is_delete=0
     <if test="projectName != null and projectName !=''">
       AND project_name = #{projectName}
     </if>
@@ -494,6 +510,8 @@
     <if test="pageStart==null or pageSize==null">
       limit 0, 10
     </if>
+    ) lab2
+    WHERE  lab1.id = lab2.id
   </select>
 
   <select id="selectProjectAllCount" parameterType="java.util.Map" resultType="java.lang.Integer">
