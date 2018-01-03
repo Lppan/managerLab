@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 /**
  * path
@@ -46,7 +47,9 @@ public class PathUtils {
      * @param filetype
      * @return
      */
-    public static String checkDirectory(String filetype,String operate){
+    public static String checkDirectory(String filetype){
+        Properties props = System.getProperties();
+        String operateName = props.getProperty("os.name").substring(0,3);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String ymd = sdf.format(new Date());
         String year = ymd.substring(0,4);
@@ -55,11 +58,10 @@ public class PathUtils {
         StringBuffer bfpath = new StringBuffer();
         String path = null;
         String [] splitpath = null;
-
-        if(null != operate && !"".equals(operate) && "WIN".equals(operate)){
+        if (operateName.toLowerCase().startsWith("win")){
             path = LabConstant.filePath.FILE_DIRECTORY_PATH_WIN +"\\"+year+"\\"+month+"\\"+today+"\\"+filetype;
             splitpath = path.split("\\\\");
-        }else if (null != operate && !"".equals(operate) && "LINUX".equals(operate)){
+        }else{
             path = LabConstant.filePath.FILE_DIRECTORY_PATH_WIN +"/"+year+"/"+month+"/"+today+"/"+filetype;
             splitpath = path.split("/");
         }

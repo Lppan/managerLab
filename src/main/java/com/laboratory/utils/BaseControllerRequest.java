@@ -50,7 +50,7 @@ public class BaseControllerRequest {
         response.getWriter().write(result);
     }
 
-    public Map<String, String> getMapParams(HttpServletRequest request){
+    public static Map<String, String> getMapParams(HttpServletRequest request){
         Map<String, String> param = new HashMap<String, String>();
         Enumeration enumeration = request.getParameterNames();
         while(enumeration.hasMoreElements()){
