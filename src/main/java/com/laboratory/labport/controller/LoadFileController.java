@@ -1,11 +1,14 @@
 package com.laboratory.labport.controller;
 
 import com.laboratory.labport.model.ResponseModel;
+import com.laboratory.labport.service.LoadFileService;
+import com.laboratory.utils.BaseControllerRequest;
 import com.laboratory.utils.LabConstant;
 import com.laboratory.utils.PathUtils;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +34,9 @@ public class LoadFileController {
 
     private Logger  logger = Logger.getLogger(LoadFileController.class);
 
+    @Autowired
+    private LoadFileService loadFileService;
+
     /**
      * 上传文件(单个文件)
      * @param request
@@ -39,19 +45,14 @@ public class LoadFileController {
     @RequestMapping(value = "/upload", method= RequestMethod.POST)
     @ResponseBody
     public String  fileUpload(HttpServletRequest request,@RequestParam("file") MultipartFile file){
-        ResponseModel responseModel = new ResponseModel();
-        String directory = PathUtils.checkDirectory("oil","WIN");
-        try {
-            FileUtils.copyInputStreamToFile(file.getInputStream(),new File(directory,file.getOriginalFilename()));
-            //上传成功，记录保存路径
-
-            responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
-            responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
-        } catch (IOException e) {
-            responseModel.setStatus(LabConstant.operateModel.OPERATE_FAILED_STATUS);
-            responseModel.setMessage(LabConstant.operateModel.OPERATE_FAILED_MESSAGE);
-            e.printStackTrace();
+        //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
+       // Map<String,Object> requestMap = JSONObject.fromObject(jsonParams);
+        Map<String, String> requestMap = BaseControllerRequest.getMapParams(request);
+        String type = null;
+        if(null != requestMap &&  requestMap.containsKey("type")){
+            type = requestMap.get("type").toString();
         }
+        ResponseModel responseModel = loadFileService.uploadFile(file, type);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
         return jsonObject.toString();
     }
@@ -65,31 +66,7 @@ public class LoadFileController {
     @RequestMapping(value  = "/multUploadFile" , method= RequestMethod.POST)
     @ResponseBody
     public String MultUploadFile(HttpServletRequest request, MultipartHttpServletRequest files){
-        ResponseModel responseModel = new ResponseModel();
-        Map<String, MultipartFile> fileMap = files.getFileMap();
-        Map<String,String> resultMap= new HashMap<String, String>();
-        String directory = PathUtils.checkDirectory("oil","WIN");
-        for (Map.Entry<String,MultipartFile>  file:fileMap.entrySet()){
-            MultipartFile fileValue = file.getValue();
-            String filename = fileValue.getOriginalFilename();
-            try {
-                FileUtils.copyInputStreamToFile(fileValue.getInputStream(),new File(directory,filename));
-                resultMap.put(filename,"SUCCESS");
-            } catch (IOException e) {
-                resultMap.put(filename,"EXCEPTION");
-                logger.info("上传文件失败;"+filename);
-                e.printStackTrace();
-            }
-        }
-        for (Map.Entry<String,String>  result:resultMap.entrySet()){
-            String value = result.getValue();
-            if (value.equals("EXCEPTION")){
-                resultMap.put(result.getKey(),"上传失败");
-            }
-        }
-            responseModel.setStatus(LabConstant.operateModel.OPERATE_FAILED_STATUS);
-            responseModel.setMessage(LabConstant.operateModel.OPERATE_FAILED_MESSAGE);
-            responseModel.setData(resultMap);
+        ResponseModel responseModel = loadFileService.multUploadFile(files);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
         return jsonObject.toString();
     }
