@@ -23,6 +23,7 @@ public class PathUtils {
         return new File(path).getAbsolutePath();
     }
 
+
     public static String getPath(Object object) {
         String path = object.getClass().getResource("").getPath();
         return new File(path).getAbsolutePath();
