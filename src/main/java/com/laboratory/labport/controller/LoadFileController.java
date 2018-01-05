@@ -70,6 +70,11 @@ public class LoadFileController {
         return jsonObject.toString();
     }
 
+    /**
+     * 下载文件
+     * @param request
+     * @param response
+     */
     @RequestMapping(value = "/download" )
     public  void downloadFile(HttpServletRequest request, HttpServletResponse response){
         //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
@@ -109,6 +114,11 @@ public class LoadFileController {
         }
     }
 
+    /**
+     * 下载文件
+     * @param response
+     * @param request
+     */
     @RequestMapping("/downloadLocal")
     public void downloadLocalFile(HttpServletResponse response,HttpServletRequest request){
         //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
