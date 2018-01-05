@@ -44,5 +44,38 @@ public class LabConstant {
         public static final String FILE_DIRECTORY_PATH_LINUX = "/lab";
     }
 
+    public static class fileType{
+
+        public static final  int  INSTRUCT_BOOK = 01;
+        public static final String INSTRUCT_BOOK_NAME ="作业指导书";
+        public static final String INSTRUCT_BOOK_CODE ="GUIDBOOK";
+
+        public static final  int PROPERTY_LIST = 02;
+        public static final String PROPERTY_LIST_NAME="性能特性清单";
+        public static final String IPROPERTY_LIST_CODE ="PROLIST";
+
+        public static final  int MACHINE_TYPE = 03;
+        public static final String MACHINE_TYPE_NAME ="机型信息表";
+        public static final String MACHINE_TYPE_CODE ="MACHINETYPE";
+
+        public static final String getName(int type ){
+            String  resultStr = "";
+            switch (type){
+                case  INSTRUCT_BOOK:
+                    resultStr = INSTRUCT_BOOK_NAME;
+                    break;
+
+                case  PROPERTY_LIST:
+                    resultStr =  PROPERTY_LIST_NAME;
+                    break;
+
+                case MACHINE_TYPE:
+                    resultStr =  MACHINE_TYPE_NAME;
+                    break;
+            }
+            return resultStr;
+        }
+
+    }
 
 }

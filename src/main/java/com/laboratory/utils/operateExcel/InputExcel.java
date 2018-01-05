@@ -27,7 +27,7 @@ import java.util.*;
 public class InputExcel {
 
     public static void main(String args[]){
-        readExcel();
+        readExcel("");
         //readexcel07plus();
     }
 
@@ -35,10 +35,10 @@ public class InputExcel {
      * Workbook、Sheet、Row、Cell等为接口；
      * HSSFWorkbook、HSSFSheet、HSSFRow、HSSFCell为97-2003版本对应的处理实现类；
      */
-    public static void readExcel(){
+    public static void readExcel(String path){
         try {
             //
-            FileInputStream fileInputStream = new FileInputStream("D:\\lab\\2018\\01\\02\\oil\\实验数据模板1.xls");
+            FileInputStream fileInputStream = new FileInputStream(path);
             HSSFWorkbook workbool = new HSSFWorkbook(fileInputStream);
             //HSSFSheet sheet = workbool.getSheet("B2B支持银行");
             HSSFSheet sheet = workbool.getSheetAt(0);
@@ -80,6 +80,7 @@ public class InputExcel {
                     HSSFRow xrow = sheet.getRow(x);
                     rowMap.put(row6.getCell(y).toString(),xrow.getCell(y));
                     //保存一条数据(map)
+
                 }
 
 
