@@ -3,23 +3,21 @@
 <mapper namespace="com.laboratory.laboratory.dao.LaboratoryMapper" >
   <resultMap id="BaseResultMap" type="com.laboratory.laboratory.model.Laboratory" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="lab_no" property="labNo" jdbcType="VARCHAR" />
+    <result column="lab_id" property="labId" jdbcType="INTEGER" />
+    <result column="project_id" property="projectId" jdbcType="INTEGER" />
+    <result column="lab_name" property="labName" jdbcType="VARCHAR" />
+    <result column="lab_function" property="labFunction" jdbcType="VARCHAR" />
+    <result column="lab_function_m" property="labFunctionM" jdbcType="VARCHAR" />
+    <result column="lab_person" property="labPerson" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="lab_task" property="labTask" jdbcType="VARCHAR" />
-    <result column="parent_project" property="parentProject" jdbcType="VARCHAR" />
-    <result column="machine_type" property="machineType" jdbcType="VARCHAR" />
-    <result column="lab_principal" property="labPrincipal" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
     <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, lab_no, status, lab_task, parent_project, machine_type, lab_principal, begin_time, 
-    end_time, memo
-  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
+    select
+    *
     from lab_laboratory
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -28,14 +26,16 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="laboratory" >
-    insert into lab_laboratory (id, lab_no, status, 
-      lab_task, parent_project, machine_type, 
-      lab_principal, begin_time, end_time, 
-      memo)
-    values (#{id,jdbcType=INTEGER}, #{labNo,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{labTask,jdbcType=VARCHAR}, #{parentProject,jdbcType=VARCHAR}, #{machineType,jdbcType=VARCHAR}, 
-      #{labPrincipal,jdbcType=VARCHAR}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{memo,jdbcType=VARCHAR})
+    insert into lab_laboratory (id, lab_id, project_id,
+    lab_name, lab_function, lab_function_m,
+    lab_person, status, is_delete,
+    begin_time, end_time, memo
+    )
+    values (#{id,jdbcType=INTEGER}, #{labId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER},
+    #{labName,jdbcType=VARCHAR}, #{labFunction,jdbcType=VARCHAR}, #{labFunctionM,jdbcType=VARCHAR},
+    #{labPerson,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{isDelete,jdbcType=VARCHAR},
+    #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR}
+    )
   </insert>
   <insert id="insertSelective" parameterType="laboratory" >
     insert into lab_laboratory
@@ -43,23 +43,29 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="labNo != null" >
-        lab_no,
+      <if test="labId != null" >
+        lab_id,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="labName != null" >
+        lab_name,
+      </if>
+      <if test="labFunction != null" >
+        lab_function,
+      </if>
+      <if test="labFunctionM != null" >
+        lab_function_m,
+      </if>
+      <if test="labPerson != null" >
+        lab_person,
       </if>
       <if test="status != null" >
         status,
       </if>
-      <if test="labTask != null" >
-        lab_task,
-      </if>
-      <if test="parentProject != null" >
-        parent_project,
-      </if>
-      <if test="machineType != null" >
-        machine_type,
-      </if>
-      <if test="labPrincipal != null" >
-        lab_principal,
+      <if test="isDelete != null" >
+        is_delete,
       </if>
       <if test="beginTime != null" >
         begin_time,
@@ -75,23 +81,29 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="labNo != null" >
-        #{labNo,jdbcType=VARCHAR},
+      <if test="labId != null" >
+        #{labId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="labName != null" >
+        #{labName,jdbcType=VARCHAR},
+      </if>
+      <if test="labFunction != null" >
+        #{labFunction,jdbcType=VARCHAR},
+      </if>
+      <if test="labFunctionM != null" >
+        #{labFunctionM,jdbcType=VARCHAR},
+      </if>
+      <if test="labPerson != null" >
+        #{labPerson,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
       </if>
-      <if test="labTask != null" >
-        #{labTask,jdbcType=VARCHAR},
-      </if>
-      <if test="parentProject != null" >
-        #{parentProject,jdbcType=VARCHAR},
-      </if>
-      <if test="machineType != null" >
-        #{machineType,jdbcType=VARCHAR},
-      </if>
-      <if test="labPrincipal != null" >
-        #{labPrincipal,jdbcType=VARCHAR},
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
       </if>
       <if test="beginTime != null" >
         #{beginTime,jdbcType=TIMESTAMP},
@@ -107,23 +119,29 @@
   <update id="updateByPrimaryKeySelective" parameterType="laboratory" >
     update lab_laboratory
     <set >
-      <if test="labNo != null" >
-        lab_no = #{labNo,jdbcType=VARCHAR},
+      <if test="labId != null" >
+        lab_id = #{labId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="labName != null" >
+        lab_name = #{labName,jdbcType=VARCHAR},
+      </if>
+      <if test="labFunction != null" >
+        lab_function = #{labFunction,jdbcType=VARCHAR},
+      </if>
+      <if test="labFunctionM != null" >
+        lab_function_m = #{labFunctionM,jdbcType=VARCHAR},
+      </if>
+      <if test="labPerson != null" >
+        lab_person = #{labPerson,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
       </if>
-      <if test="labTask != null" >
-        lab_task = #{labTask,jdbcType=VARCHAR},
-      </if>
-      <if test="parentProject != null" >
-        parent_project = #{parentProject,jdbcType=VARCHAR},
-      </if>
-      <if test="machineType != null" >
-        machine_type = #{machineType,jdbcType=VARCHAR},
-      </if>
-      <if test="labPrincipal != null" >
-        lab_principal = #{labPrincipal,jdbcType=VARCHAR},
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=VARCHAR},
       </if>
       <if test="beginTime != null" >
         begin_time = #{beginTime,jdbcType=TIMESTAMP},
@@ -139,12 +157,14 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="laboratory" >
     update lab_laboratory
-    set lab_no = #{labNo,jdbcType=VARCHAR},
+    set lab_id = #{labId,jdbcType=INTEGER},
+      project_id = #{projectId,jdbcType=INTEGER},
+      lab_name = #{labName,jdbcType=VARCHAR},
+      lab_function = #{labFunction,jdbcType=VARCHAR},
+      lab_function_m = #{labFunctionM,jdbcType=VARCHAR},
+      lab_person = #{labPerson,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
-      lab_task = #{labTask,jdbcType=VARCHAR},
-      parent_project = #{parentProject,jdbcType=VARCHAR},
-      machine_type = #{machineType,jdbcType=VARCHAR},
-      lab_principal = #{labPrincipal,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=VARCHAR},
       begin_time = #{beginTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       memo = #{memo,jdbcType=VARCHAR}

@@ -37,10 +37,11 @@ public class UserIndexController {
     @RequestMapping(value= "/login" , produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String login(HttpServletRequest request){
-        net.sf.json.JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
+        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
         ResponseModel responseModel = checkUserNameAndPassword(paramMap);
-        if (null != responseModel){
+        Integer status = responseModel.getStatus();
+        if (null == responseModel.getData() && "".equals(responseModel.getData()) ){
             JSONObject jsonObject = JSONObject.fromObject(responseModel);
             return jsonObject.toString();
         }else{
@@ -75,12 +76,12 @@ public class UserIndexController {
     public ResponseModel checkUserNameAndPassword(Map<String,Object> paramMap){
         ResponseModel responseModel = new ResponseModel();
         if (null != paramMap && !paramMap.isEmpty()){
-            if (paramMap.containsKey("userName") && null != paramMap.get("userName") && !"".equals(paramMap.get("userName"))){
+            if (paramMap.containsKey("userName") && null == paramMap.get("userName") && "".equals(paramMap.get("userName"))){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":用户名不能为空");
                 return responseModel;
             }
-            if (paramMap.containsKey("password") && null != paramMap.get("password") && !"".equals(paramMap.get("password"))){
+            if (paramMap.containsKey("password") && null == paramMap.get("password") && "".equals(paramMap.get("password"))){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":密码不能为空");
                 return responseModel;

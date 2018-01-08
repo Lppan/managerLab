@@ -3,19 +3,24 @@ package com.laboratory.laboratory.model;
 import java.util.Date;
 
 public class Laboratory {
+
     private Integer id;
 
-    private String labNo;
+    private Integer labId;
+
+    private Integer projectId;
+
+    private String labName;
+
+    private String labFunction;
+
+    private String labFunctionM;
+
+    private String labPerson;
 
     private String status;
 
-    private String labTask;
-
-    private String parentProject;
-
-    private String machineType;
-
-    private String labPrincipal;
+    private String isDelete;
 
     private Date beginTime;
 
@@ -31,12 +36,52 @@ public class Laboratory {
         this.id = id;
     }
 
-    public String getLabNo() {
-        return labNo;
+    public Integer getLabId() {
+        return labId;
     }
 
-    public void setLabNo(String labNo) {
-        this.labNo = labNo == null ? null : labNo.trim();
+    public void setLabId(Integer labId) {
+        this.labId = labId;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getLabName() {
+        return labName;
+    }
+
+    public void setLabName(String labName) {
+        this.labName = labName;
+    }
+
+    public String getLabFunction() {
+        return labFunction;
+    }
+
+    public void setLabFunction(String labFunction) {
+        this.labFunction = labFunction;
+    }
+
+    public String getLabFunctionM() {
+        return labFunctionM;
+    }
+
+    public void setLabFunctionM(String labFunctionM) {
+        this.labFunctionM = labFunctionM;
+    }
+
+    public String getLabPerson() {
+        return labPerson;
+    }
+
+    public void setLabPerson(String labPerson) {
+        this.labPerson = labPerson;
     }
 
     public String getStatus() {
@@ -44,39 +89,15 @@ public class Laboratory {
     }
 
     public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+        this.status = status;
     }
 
-    public String getLabTask() {
-        return labTask;
+    public String getIsDelete() {
+        return isDelete;
     }
 
-    public void setLabTask(String labTask) {
-        this.labTask = labTask == null ? null : labTask.trim();
-    }
-
-    public String getParentProject() {
-        return parentProject;
-    }
-
-    public void setParentProject(String parentProject) {
-        this.parentProject = parentProject == null ? null : parentProject.trim();
-    }
-
-    public String getMachineType() {
-        return machineType;
-    }
-
-    public void setMachineType(String machineType) {
-        this.machineType = machineType == null ? null : machineType.trim();
-    }
-
-    public String getLabPrincipal() {
-        return labPrincipal;
-    }
-
-    public void setLabPrincipal(String labPrincipal) {
-        this.labPrincipal = labPrincipal == null ? null : labPrincipal.trim();
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
     }
 
     public Date getBeginTime() {
@@ -100,6 +121,6 @@ public class Laboratory {
     }
 
     public void setMemo(String memo) {
-        this.memo = memo == null ? null : memo.trim();
+        this.memo = memo;
     }
 }
