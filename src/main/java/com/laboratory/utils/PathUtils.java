@@ -3,8 +3,7 @@ package com.laboratory.utils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -45,37 +44,57 @@ public class PathUtils {
 
     /**
      * 根据路径判断是否存在真实路径 如果不存在就创建一个
-     * @param filetype
+     * @param fileMap    检查(创建)目录的必要字段
+     *                   fileType：文件类型 ，具体的实验内容
+     *                   projectName：项目名称
      * @return
      */
-    public static String checkDirectory(String filetype){
+    public static String checkDirectory(Map<String,String> fileMap){
         Properties props = System.getProperties();
         String operateName = props.getProperty("os.name").substring(0,3);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String ymd = sdf.format(new Date());
-        String year = ymd.substring(0,4);
-        String month = ymd.substring(5,7);
-        String today = ymd.substring(ymd.length()-2,ymd.length());
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        String ymd = sdf.format(new Date());
+//        String year = ymd.substring(0,4);
+//        String month = ymd.substring(5,7);
+//        String today = ymd.substring(ymd.length()-2,ymd.length());
         StringBuffer bfpath = new StringBuffer();
-        String path = null;
-        String [] splitpath = null;
-        if (operateName.toLowerCase().startsWith("win")){
-            path = LabConstant.filePath.FILE_DIRECTORY_PATH_WIN +"\\"+year+"\\"+month+"\\"+today+"\\"+filetype;
-            splitpath = path.split("\\\\");
-        }else{
-            path = LabConstant.filePath.FILE_DIRECTORY_PATH_WIN +"/"+year+"/"+month+"/"+today+"/"+filetype;
-            splitpath = path.split("/");
-        }
-        for(int i=0 ; i < splitpath.length ; i++){
-            bfpath = bfpath.append(splitpath[i]).append("/");
-            File file = new File(bfpath.toString());
-            //if (splitpath.length-1!=i){             //path到文件时，不需要创建文件夹
-            if (!file.exists()){
-                file.mkdir();
-                //file.createNewFile();         //创建文件
-                logger.info("创建目录："+bfpath);
+        if (null != fileMap && !fileMap.isEmpty()){
+            String fileType = null;
+            if (fileMap.containsKey("fileType")){
+                fileType = fileMap.get("fileType");
             }
-            // }
+            String projectName = null;
+            if (fileMap.containsKey("projectName")){
+                projectName = fileMap.get("projectName");
+            }
+            String path = null;
+            String [] splitpath = null;
+            if (operateName.toLowerCase().startsWith("win")){
+                if (!fileType.equals("") && null != fileType){
+                    path = LabConstant.filePath.FILE_DIRECTORY_PATH_WIN +"\\\\"+projectName+"\\\\"+fileType;
+                } else if (fileType.equals("") || null == fileType){
+                    path = LabConstant.filePath.FILE_DIRECTORY_PATH_WIN +"\\"+projectName;
+                }
+                splitpath = path.split("\\\\");
+            }else{
+                if (null != fileType && !fileType.equals("")){
+                    path = LabConstant.filePath.FILE_DIRECTORY_PATH_WIN +"/"+projectName+"/"+fileType;
+                }else if (null == fileType && fileType.equals("")){
+                    path = LabConstant.filePath.FILE_DIRECTORY_PATH_WIN +"/"+projectName;
+                }
+                splitpath = path.split("/");
+            }
+            for(int i=0 ; i < splitpath.length ; i++){
+                bfpath = bfpath.append(splitpath[i]).append("/");
+                File file = new File(bfpath.toString());
+                //if (splitpath.length-1!=i){             //path到文件时，不需要创建文件夹
+                if (!file.exists()){
+                    file.mkdir();
+                    //file.createNewFile();         //创建文件
+                    logger.info("创建目录："+bfpath);
+                }
+                // }
+            }
         }
         return bfpath.toString();
     }
