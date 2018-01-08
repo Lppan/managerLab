@@ -17,6 +17,7 @@ public class LabConstant {
         public static final int LOGIN_ERROR_CODE = 0002;
         public static final int LOGIN_EMPTY_CODE = 0003;
         public static final String LOGIN_SUCCESS_MESSAGE = "登录成功";
+        public static final String LOGIN_SUCCESS_LOGOUT_MESSAGE = "登出成功";
         public static final String LOGIN_FAILED_MESSAGE = "用户名或密码不正确";
         public static final String LOGIN_ERROR_MESSAGE = "用户不存在";
         public static final String LOGIN_EMPTY_MESSAGE = "用户不或密码不能为空";
@@ -40,7 +41,7 @@ public class LabConstant {
     public class filePath{
 
         //油耗实验数据路径
-        public static final String FILE_DIRECTORY_PATH_WIN = "D:\\lab\\";
+        public static final String FILE_DIRECTORY_PATH_WIN = "D:\\lab";
         public static final String FILE_DIRECTORY_PATH_LINUX = "/lab";
     }
 
