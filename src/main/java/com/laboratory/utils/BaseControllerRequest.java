@@ -27,8 +27,9 @@ public class BaseControllerRequest {
                 sb.append(line);
             }
             json = sb.toString();
-            //json = AESUtils.decrypt(AESUtils.key, AESUtils.iv, json);
-            params = JSONObject.fromObject(json);
+           if (null != json &&  !"".equals(json)){
+               params = JSONObject.fromObject(json);
+           }
             in.close();
         } catch (Exception e) {
             e.printStackTrace();
