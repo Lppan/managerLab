@@ -23,6 +23,19 @@
 
     <mvc:resources mapping="/static/**" location="/static/" />
     <mvc:resources mapping="/index.html" location="/index.html" />
+
+    <bean class ="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+        <property name= "messageConverters" >
+            <list>
+                <ref bean="stringHttpMessageConverter"/>
+                <ref bean="jsonHttpMessageConverter"/>
+                <!--    <ref bean="mappingJacksonHttpMessageConverter" /> -->
+                <!-- 新增的StringMessageConverter bean-->
+                <!-- <ref bean="formHttpMessageConverter" /> -->
+            </list>
+        </property>
+    </bean>
+
     <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter" >
         <property name = "supportedMediaTypes">
             <list>
@@ -30,14 +43,14 @@
             </list>
         </property>
     </bean>
-    <!--<bean id="jsonHttpMessageConverter"-->
-          <!--class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
-        <!--<property name="supportedMediaTypes">-->
-            <!--<list>-->
-                <!--<value>application/json</value>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <bean id="jsonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json</value>
+            </list>
+        </property>
+    </bean>
     <!--  静态资源映射 因为使用springMVC 拦截的路径是 '/' 所以拦截了所以请求，同时静态资源也被拦截 -->
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
         <property value="utf-8" name="defaultEncoding"/>
