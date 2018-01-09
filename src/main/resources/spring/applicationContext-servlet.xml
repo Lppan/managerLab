@@ -24,7 +24,7 @@
     <mvc:resources mapping="/static/**" location="/static/" />
     <mvc:resources mapping="/index.html" location="/index.html" />
 
-    <bean class ="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+    <bean class ="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" >
         <property name= "messageConverters" >
             <list>
                 <ref bean="stringHttpMessageConverter"/>
