@@ -376,7 +376,7 @@ RESPONSE
 }
 
 //添加项目
-/project/addProjectInfo
+/projectInfo/addProjectInfo
 
 REQUEST
 {
@@ -390,6 +390,8 @@ REQUEST
     "dais": 2,                         //台架
     "memo": "1",                       //备注
     "egr": "3",                        //EGR
+    "mapPicture":"122",                //map图
+    "ECU":"12",                        //ecu
     "planBeginTime": 1514692180000,    //计划开始时间
     "machineNo": "123",                //发动机编号
     "rotateSpeed": 123,                //额顶点转速
