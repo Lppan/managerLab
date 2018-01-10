@@ -24,7 +24,7 @@
     <mvc:resources mapping="/static/**" location="/static/" />
     <mvc:resources mapping="/index.html" location="/index.html" />
 
-    <bean class ="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" >
+    <bean class ="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name= "messageConverters" >
             <list>
                 <ref bean="stringHttpMessageConverter"/>
@@ -43,11 +43,10 @@
             </list>
         </property>
     </bean>
-    <bean id="jsonHttpMessageConverter"
-          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    <bean id="jsonHttpMessageConverter"  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>
-                <value>application/json</value>
+                <value>application/json;charset=UTF-8</value>
             </list>
         </property>
     </bean>
