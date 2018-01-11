@@ -14,15 +14,17 @@ public interface ProjectInfoMapper {
 
     int insert(ProjectInfo record);
 
-    int insertSelective(Map<String,Object> projectMap);
+    int insertSelective(ProjectInfo projectInfo);
 
     ProjectInfo selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Map<String,Object> projectMap);
+    int updateByPrimaryKeySelective(ProjectInfo projectInfo);
 
     int updateByPrimaryKey(ProjectInfo record);
 
     List<ProjectInfo> selectProjectAllByPage(Map<String,Object> paramMap);
 
     int selectProjectAllCount(Map<String,Object> parmMap);
+
+    int updateStataus(Map<String,Object> projectMap);
 }

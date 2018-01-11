@@ -85,12 +85,9 @@
       #{isStoppage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{is_delete,jdbcType=TINYINT},
       #{memo,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="java.util.Map" >
+  <insert id="insertSelective" parameterType="projectInfo" >
     insert into lab_project_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="projectNo != null" >
         project_no,
       </if>
@@ -135,6 +132,9 @@
       </if>
       <if test="egr != null" >
         egr,
+      </if>
+      <if test="ecu != null" >
+        ecu,
       </if>
       <if test="fuelSystem != null" >
         fuel_system,
@@ -200,9 +200,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="projectNo != null" >
         #{projectNo,jdbcType=VARCHAR},
       </if>
@@ -247,6 +244,9 @@
       </if>
       <if test="egr != null" >
         #{egr,jdbcType=VARCHAR},
+      </if>
+      <if test="ecu != null" >
+        #{ecu,jdbcType=VARCHAR},
       </if>
       <if test="fuelSystem != null" >
         #{fuelSystem,jdbcType=VARCHAR},
@@ -312,7 +312,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="java.util.Map">
+  <update id="updateByPrimaryKeySelective" parameterType="projectInfo">
     update lab_project_info
     <set >
       <if test="projectNo != null" >
@@ -359,6 +359,9 @@
       </if>
       <if test="egr != null" >
         egr = #{egr,jdbcType=VARCHAR},
+      </if>
+      <if test="ecu != null" >
+        ecu = #{ecu,jdbcType=VARCHAR},
       </if>
       <if test="fuelSystem != null" >
         fuel_system = #{fuelSystem,jdbcType=VARCHAR},
@@ -480,9 +483,10 @@
     lab1.importance_level importanceLevel,
     lab1.dais,
     lab1.plan_begin_time planBeginTime,
+    lab1.plan_end_time planEndTime,
+    lab1.create_time createTime,
     lab1.status
-    FROM lab_project_info lab1,
-    (SELECT id FROM lab_project_info WHERE is_delete=0
+    FROM lab_project_info lab1 WHERE 1=1
     <if test="projectName != null and projectName !=''">
       AND project_name = #{projectName}
     </if>
@@ -504,14 +508,13 @@
     <if test="createTime != null and ceateTime !=''">
       AND create_time =#{createTIme}
     </if>
+      ORDER  BY  create_time DESC
     <if test="pageStart!=null and pageSize!=null">
       limit #{pageStart}, #{pageSize}
     </if>
     <if test="pageStart==null or pageSize==null">
       limit 0, 10
     </if>
-    ) lab2
-    WHERE  lab1.id = lab2.id
   </select>
 
   <select id="selectProjectAllCount" parameterType="java.util.Map" resultType="java.lang.Integer">
@@ -538,4 +541,14 @@
       AND create_time =#{createTIme}
     </if>
   </select>
+
+  <update id="updateStataus" parameterType="java.util.Map">
+    UPDATE  lab_project_info
+    <set>
+      <if test="status != null and status !=''" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

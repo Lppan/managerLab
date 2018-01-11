@@ -3,11 +3,9 @@ package com.laboratory.project.service;
 import com.laboratory.labport.model.ResponseModel;
 import com.laboratory.project.dao.ProjectInfoMapper;
 import com.laboratory.project.model.ProjectInfo;
-import com.laboratory.utils.DateConversionUtils;
 import com.laboratory.utils.LabConstant;
 import com.laboratory.utils.MapUtils;
 import com.laboratory.utils.PageUtils;
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +35,7 @@ public class ProjectInfoService {
             int pageCount = projectInfoMapper.selectProjectAllCount(paramMap);
             paramMap.put("count",pageCount);
             List<ProjectInfo> projectInfoList = projectInfoMapper.selectProjectAllByPage(PageUtils.Page(request,paramMap));
-            logger.info("根据id查询结果："+projectInfoList);
+            logger.info("根据id查询结果："+projectInfoList.toString());
             Map<String,Object> pageMap = new HashMap<String,Object>();
             pageMap.put("count",pageCount);
             PageUtils.calculate(pageMap);
@@ -64,16 +62,18 @@ public class ProjectInfoService {
     }
 
 
-    public ResponseModel insertSelective(Map<String,Object> projectMap){
-        ResponseModel responseModel = checkProjectMust(projectMap);
+    public ResponseModel insertSelective(ProjectInfo projectInfo){
+        ResponseModel responseModel = checkProjectMust(projectInfo);
         if (null != responseModel.getStatus()){
             return responseModel;
         }else{
-            String planBeginTime = DateConversionUtils.valueToDate((Long)projectMap.get("planBeginTime"));
-            String planEndTime = DateConversionUtils.valueToDate((Long)projectMap.get("planEndTime"));
-            projectMap.put("planBeginTime",planBeginTime);
-            projectMap.put("planEndTime",planEndTime);
-            int selective = projectInfoMapper.insertSelective(projectMap);
+            //String planBeginTime = DateConversionUtils.valueToDate((Long)projectMap.get("planBeginTime"));
+            //String planEndTime = DateConversionUtils.valueToDate((Long)projectMap.get("planEndTime"));
+
+            //projectMap.put("planBeginTime",planBeginTime);
+            //projectMap.put("planEndTime",planEndTime);
+
+            int selective = projectInfoMapper.insertSelective(projectInfo);
             if(selective > 0){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
@@ -123,16 +123,16 @@ public class ProjectInfoService {
         return responseModel;
     }
 
-    public ResponseModel updateByPrimaryKeySelective(Map<String,Object> projectMap){
-        ResponseModel responseModel = checkProjectMust(projectMap);
+    public ResponseModel updateByPrimaryKeySelective(ProjectInfo projectInfo){
+        ResponseModel responseModel = checkProjectMust(projectInfo);
         if (null != responseModel){
             return responseModel;
         }else{
-            String planBeginTime = DateConversionUtils.valueToDate((Long)projectMap.get("planBeginTime"));
-            String planEndTime = DateConversionUtils.valueToDate((Long)projectMap.get("planEndTime"));
-            projectMap.put("planBeginTime",planBeginTime);
-            projectMap.put("planEndTime",planEndTime);
-            int keySelective = projectInfoMapper.updateByPrimaryKeySelective(projectMap);
+//            String planBeginTime = DateConversionUtils.valueToDate((Long)projectInfo.getPlanBeginTime());
+//            String planEndTime = DateConversionUtils.valueToDate((Long)projectMap.get("planEndTime"));
+//            projectMap.put("planBeginTime",planBeginTime);
+//            projectMap.put("planEndTime",planEndTime);
+            int keySelective = projectInfoMapper.updateByPrimaryKeySelective(projectInfo);
             if(keySelective >0){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
@@ -148,143 +148,101 @@ public class ProjectInfoService {
         return projectInfoMapper.updateByPrimaryKey(record);
     }
 
-
-    public ResponseModel checkProjectMust(Map<String,Object> paramMap){
+    public ResponseModel setProjectStatus(Map<String,Object> paramMap){
         ResponseModel responseModel = new ResponseModel();
-        if (null != paramMap && !paramMap.isEmpty()){
-            if (paramMap.containsKey("projectName") && null == paramMap.get("projectName") || "".equals(paramMap.get("projectName"))){
+        if (null != paramMap && paramMap.containsKey("id")){
+            Integer id = Integer.valueOf(paramMap.get("id").toString());
+            paramMap.put("status",3);
+        }
+        int i = projectInfoMapper.updateStataus(paramMap);
+        if (i > 0){
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
+        }else{
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_FAILED_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_FAILED_MESSAGE);
+        }
+        return responseModel;
+    }
+
+    public ResponseModel setProjectStatusBack(Map<String,Object> paramMap){
+        ResponseModel responseModel = new ResponseModel();
+        if (null != paramMap && !paramMap.isEmpty() && paramMap.containsKey("id")){
+            Integer id = Integer.valueOf(paramMap.get("id").toString());
+            paramMap.put("status",2);
+            int i = projectInfoMapper.updateStataus(paramMap);
+            if (i > 0){
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
+            }else{
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_FAILED_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_FAILED_MESSAGE);
+            }
+        }else{
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_FAILED_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+"id不能为空");
+        }
+        return responseModel;
+    }
+
+
+    public ResponseModel checkProjectMust(ProjectInfo projectInfo){
+        ResponseModel responseModel = new ResponseModel();
+        if (null != projectInfo){
+            //获取成员变量
+           if (null == projectInfo.getProjectName() && "".equals(projectInfo.getProjectName())){
+               responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+               responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目名不能为空");
+               return responseModel;
+           }
+            if (null == projectInfo.getParentProjectName() && "".equals(projectInfo.getParentProjectName())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目名不能为空");
-                return responseModel;
-            }else if ( !paramMap.containsKey("projectName")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目名不能为空");
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":所属项目名不能为空");
                 return responseModel;
             }
-            if (paramMap.containsKey("parentProjectName") && null == paramMap.get("parentProjectName") || "".equals(paramMap.get("parentProjectName"))){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":所属项目不能为空");
-                return responseModel;
-            }else if ( !paramMap.containsKey("parentProjectName")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":所属项目不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("projectPrincipal") && null == paramMap.get("projectPrincipal") || "".equals(paramMap.get("projectPrincipal"))){
+            if (null == projectInfo.getProjectPrincipal()&& "".equals(projectInfo.getProjectPrincipal())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目负责人不能为空");
                 return responseModel;
-            }else if (!paramMap.containsKey("projectPrincipal")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目负责人不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("machineType") && null == paramMap.get("machineType") || "".equals(paramMap.get("machineType"))){
+            }if (null == projectInfo.getMachineType() && "".equals(projectInfo.getMachineType())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":实验机型不能为空");
                 return responseModel;
-            }else if (!paramMap.containsKey("machineType")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":实验机型不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("machineNo") && null == paramMap.get("machineNo") || "".equals(paramMap.get("machineNo"))){
+            }if (null == projectInfo.getMachineNo() && "".equals(projectInfo.getMachineNo())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":实验机号不能为空");
                 return responseModel;
-            }else if (!paramMap.containsKey("machineNo")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":实验机号不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("powerRate") && null == paramMap.get("powerRate") || "".equals(paramMap.get("powerRate"))){
+            }if (null == projectInfo.getPowerRate() && "".equals(projectInfo.getPowerRate())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":机器功率不能为空");
                 return responseModel;
-            }else if (!paramMap.containsKey("powerRate")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":机器功率不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("planBeginTime") && null == paramMap.get("planBeginTime") || "".equals(paramMap.get("planBeginTime"))){
+            }if (null == projectInfo.getPlanBeginTime() && "".equals(projectInfo.getPlanBeginTime())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目计划开始时间不能为空");
                 return responseModel;
-            }else if (!paramMap.containsKey("planBeginTime")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目计划开始时间不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("planEndTime") && null == paramMap.get("planEndTime") || "".equals(paramMap.get("planEndTime"))){
+            }if (null == projectInfo.getPlanEndTime() && "".equals(projectInfo.getPlanEndTime())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目计划结束时间不能为空");
                 return responseModel;
-            }else if (!paramMap.containsKey("planEndTime")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目计划结束时间不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("projectCycle") && null == paramMap.get("projectCycle") || "".equals(paramMap.get("projectCycle"))){
+            }if (null == projectInfo.getProjectCycle() && "".equals(projectInfo.getProjectCycle())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目周期不能为空");
                 return responseModel;
-            } else if (!paramMap.containsKey("projectCycle")){
+            }if (null == projectInfo.getProjectContent()&& "".equals(projectInfo.getProjectContent())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目周期不能为空");
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":实验任务不能为空");
                 return responseModel;
-            }
-            if(paramMap.containsKey("projectContent") && null == paramMap.get("projectContent") || "".equals(paramMap.get("projectContent"))){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":实验内容不能为空");
-                return responseModel;
-            }else if (!paramMap.containsKey("projectContent")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":实验内容不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("operationInstruction") && null == paramMap.get("operationInstruction") || "".equals(paramMap.get("operationInstruction"))){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":作业指导书不能为空");
-                return responseModel;
-            }else if (!paramMap.containsKey("operationInstruction")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":作业指导书不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("propertyCharacterList") && null == paramMap.get("propertyCharacterList") || "".equals(paramMap.get("propertyCharacterList"))){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":性能特性清单不能为空");
-                return responseModel;
-            }else if (!paramMap.containsKey("propertyCharacterList")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":性能特性清单不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("machineNoList") && null == paramMap.get("machineNoList") || "".equals(paramMap.get("machineNoList"))){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":机型信息表不能为空");
-                return responseModel;
-            }else if (!paramMap.containsKey("machineNoList")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":机型信息表不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("dais") && null == paramMap.get("dais") || "".equals(paramMap.get("dais"))){
+            }if (null == projectInfo.getDais() && "".equals(projectInfo.getDais())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":实验台架不能为空");
                 return responseModel;
-            }else if (!paramMap.containsKey("dais")){
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":实验台架不能为空");
-                return responseModel;
-            }
-            if(paramMap.containsKey("status") && null == paramMap.get("status") || "".equals(paramMap.get("status"))){
+            }if (null == projectInfo.getStatus() && "".equals(projectInfo.getStatus())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目状态不能为空");
                 return responseModel;
-            }else if (!paramMap.containsKey("status")){
+            }if (null == projectInfo.getProjectName() && "".equals(projectInfo.getProjectName())){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目状态不能为空");
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":项目名不能为空");
                 return responseModel;
             }
         }else{

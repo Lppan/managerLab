@@ -40,6 +40,8 @@ public class ProjectInfo extends BaseModel{
 
     private String egr;                         //EGR
 
+    private String ecu;                         //ECU
+
     private String fuelSystem;                  //燃油系统
 
     private String intake;                      //进气方式
@@ -206,6 +208,14 @@ public class ProjectInfo extends BaseModel{
 
     public String getEgr() {
         return egr;
+    }
+
+    public String getEcu() {
+        return ecu;
+    }
+
+    public void setEcu(String ecu) {
+        this.ecu = ecu;
     }
 
     public void setEgr(String egr) {
@@ -386,5 +396,49 @@ public class ProjectInfo extends BaseModel{
 
     public void setMemo(String memo) {
         this.memo = memo == null ? null : memo.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectInfo{" +
+                "id=" + id +
+                ", projectNo='" + projectNo + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", parentProjectName='" + parentProjectName + '\'' +
+                ", projectPrincipal='" + projectPrincipal + '\'' +
+                ", machineType='" + machineType + '\'' +
+                ", machineNo='" + machineNo + '\'' +
+                ", powerRate=" + powerRate +
+                ", rotateSpeed=" + rotateSpeed +
+                ", oilConsumeSign=" + oilConsumeSign +
+                ", torsionSpace=" + torsionSpace +
+                ", oilConsumeLow=" + oilConsumeLow +
+                ", speedPointTotal=" + speedPointTotal +
+                ", mapPicture='" + mapPicture + '\'' +
+                ", standard='" + standard + '\'' +
+                ", egr='" + egr + '\'' +
+                ", fuelSystem='" + fuelSystem + '\'' +
+                ", intake='" + intake + '\'' +
+                ", midleCooling='" + midleCooling + '\'' +
+                ", valueNo=" + valueNo +
+                ", speedPointTotalLimit='" + speedPointTotalLimit + '\'' +
+                ", speedPointTotalHight='" + speedPointTotalHight + '\'' +
+                ", stoke='" + stoke + '\'' +
+                ", importanceLevel='" + importanceLevel + '\'' +
+                ", planBeginTime=" + planBeginTime +
+                ", planEndTime=" + planEndTime +
+                ", projectCycle='" + projectCycle + '\'' +
+                ", projectContent=" + projectContent +
+                ", operationInstruction='" + operationInstruction + '\'' +
+                ", propertyCharacterList='" + propertyCharacterList + '\'' +
+                ", machineNoList='" + machineNoList + '\'' +
+                ", dais=" + dais +
+                ", status='" + status + '\'' +
+                ", isStoppage='" + isStoppage + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", isDelete='" + isDelete + '\'' +
+                ", memo='" + memo + '\'' +
+                '}';
     }
 }
