@@ -6,9 +6,11 @@ import com.laboratory.system.user.service.UserService;
 import com.laboratory.utils.BaseControllerRequest;
 import com.laboratory.utils.LabConstant;
 import net.sf.json.JSONObject;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,75 +31,51 @@ public class UserController {
     private UserService userService;
     @RequestMapping(value = "/addUser" ,method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String addUser(HttpServletRequest request){
-        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
-        Map<String,Object> userMap = JSONObject.fromObject(jsonParams);
-        ResponseModel responseModel = new ResponseModel();
-        if(null != userMap && !userMap.isEmpty()){
-            logger.info("提交的添加用户信息:"+ userMap.toString());
-            responseModel= userService.insert(userMap);
-        }else{
-            responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-            responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+"：用户信息不能为空");
-        }
-        //responseModel.setData("");
+    public String addUser(HttpServletRequest request, @RequestBody User user){
+        //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
+        //Map<String,Object> userMap = JSONObject.fromObject(jsonParams);
+        //ResponseModel responseModel = new ResponseModel();
+        logger.info("提交的添加用户信息:"+ user.toString());
+        ResponseModel responseModel= userService.insert(user);
+        responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+        responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+"：用户信息不能为空");
         JSONObject object = JSONObject.fromObject(responseModel);
         return object.toString();
     }
 
     @RequestMapping(value = "/selectUserById" , produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String selectUserById(HttpServletRequest request){
-        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
-        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
-        Integer id = null;
-        if(paramMap.containsKey("id")){
-            id = Integer.valueOf(paramMap.get("id").toString());
-        }
-        ResponseModel responseModel = new ResponseModel();
-        logger.info("根据用户id查询用户，用户id为："+ id);
-        User user = new User();
-        if(id != null && !"".equals(id)){
-            responseModel = userService.selectByPrimaryKey(id);
-        }else{
-            //必要参数为空
-            responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-            responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+"：id不能为空");
-        }
-        JSONObject object = JSONObject.fromObject(responseModel);
+    public String selectUserById(HttpServletRequest request,@RequestBody Integer id){
+//       JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
+//       Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
+//       Integer id = null;
+         logger.info("根据用户id查询用户，用户id为："+ id);
+         ResponseModel responseModel = userService.selectByPrimaryKey(id);
+         JSONObject object = JSONObject.fromObject(responseModel);
         return object.toString();
     }
 
     @RequestMapping(value = "/deleteById" , produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String deleteById(HttpServletRequest request){
-        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
-        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
-        ResponseModel responseModel = new ResponseModel();
-        if(paramMap.containsKey("id")){
-           Integer id = Integer.valueOf(paramMap.get("id").toString());
-            logger.info("根据用户id查询用户，用户id为："+ id);
-            responseModel = userService.deleteByPrimaryKey(id);
-        }else{
-            responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-            responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MESSAGE);
-        }
-        JSONObject object = JSONObject.fromObject(responseModel);
+    public String deleteById(HttpServletRequest request,@RequestBody Integer id){
+//        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
+//        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
+//        ResponseModel responseModel = new ResponseModel();
+          logger.info("根据用户id查询用户，用户id为："+ id);
+          ResponseModel responseModel = userService.deleteByPrimaryKey(id);
+          JSONObject object = JSONObject.fromObject(responseModel);
         return object.toString();
     }
 
     @RequestMapping(value = "/updateUser",produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String updateUserById(HttpServletRequest request){
+    public String updateUserById(HttpServletRequest request,@RequestBody User user){
         ResponseModel responseModel = new ResponseModel();
-        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
-        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
-        logger.info("修改的用户信息为:"+paramMap.toString());
-        if(paramMap != null && !paramMap.isEmpty()){
-            responseModel = userService.updateByPrimaryKeySelective(paramMap);
-        }else{
+//      JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
+//      Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
+        logger.info("修改的用户信息为:"+user.toString());
+        responseModel = userService.updateByPrimaryKeySelective(user);
 
-        }
         JSONObject object = JSONObject.fromObject(responseModel);
         return object.toString();
     }
@@ -105,20 +83,19 @@ public class UserController {
     @RequestMapping("/updateStatus")
     @ResponseBody
     public String updateStatus(HttpServletRequest request,String id){
-        String status = null;
-        if(null != id && !"".equals(id)){
-            status = userService.updateStatus(id);
-        }else{
-
-        }
-        return status;
+        ResponseModel responseModel = userService.updateStatus(id);
+        JSONObject object = JSONObject.fromObject(responseModel);
+        return object.toString();
     }
 
     @RequestMapping(value = "/getUserList",produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public String selectAllByPage(HttpServletRequest request){
-        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
-        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
+    public String selectAllByPage(HttpServletRequest request,@RequestBody Map<String,Object> paramMap){
+//        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
+//        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
+        if (null == paramMap){
+            paramMap = new HashedMap();
+        }
         ResponseModel responseModel = userService.selectAllByPage(request, paramMap);
         JSONObject object = JSONObject.fromObject(responseModel);
         return object.toString();

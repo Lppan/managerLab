@@ -16,13 +16,13 @@ public interface UserMapper {
     //添加
     int insert(User user);
     //字段选择性的添加
-    int insertSelective(Map<String,Object> paramMap);
+    int insertSelective(User user);
     //根据主键删除
     int deleteByPrimaryKey(Integer id);
     //根据id查询
     User selectByPrimaryKey(Integer id);
     //根据主键字段选择性的更新
-    int updateByPrimaryKeySelective(Map<String,Object> paramMap);
+    int updateByPrimaryKeySelective(User user);
     //根据主键更新
     int updateByPrimaryKey(User record);
     //根据id 修改激活状态
@@ -32,5 +32,7 @@ public interface UserMapper {
     //分页查询条数
     int selectAllByPageCount(Map<String,Object> paramMap);
     //根据登录用户名和手机号查询用户
-    List<User> selectUserByUserName(Map<String, Object> paramMap);
+    List<User> selectUser(User user);
+    //根据用户名和密码查询用户
+    List<User> selectUserByUserName(Map<String,Object> paramMap);
 }

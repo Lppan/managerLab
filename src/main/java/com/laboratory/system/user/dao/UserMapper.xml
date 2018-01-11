@@ -32,7 +32,7 @@
         #{updateTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR})
     </insert>
     <!--有选择性的插入-->
-    <insert id="insertSelective" parameterType="java.util.Map" >
+    <insert id="insertSelective" parameterType="userModel" >
         insert into lab_user
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -133,7 +133,7 @@
       memo = #{memo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-    <update id="updateByPrimaryKeySelective" parameterType="java.util.Map" >
+    <update id="updateByPrimaryKeySelective" parameterType="userModel" >
         update lab_user
         <set >
             <if test="userName != null" >
@@ -168,7 +168,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <!--根据主键修改状态-->
-    <update id="updateStatus" parameterType="string">
+    <update id="updateStatus" parameterType="java.lang.Integer">
         UPDATE lab_user SET
         <if test="status != null and status!=''">
             status=#{status}
@@ -215,7 +215,19 @@
     </select>
 
     <select id="selectUserByUserName" parameterType="java.util.Map" resultType="userModel">
-          SELECT  *  FROM  lab_user WHERE  1=1
+        SELECT  *  FROM  lab_user WHERE  1=1
+        <if test="userName != null and  userName !=''">
+            AND  user_name=#{userName}
+        </if>
+        <if test="phone != null and phone !=''">
+            AND  phone=#{phone}
+        </if>
+        <if test="id != null and is !=''">
+            AND id != #{id}
+        </if>
+    </select>
+    <select id="selectUser" parameterType="userModel" resultType="userModel">
+        SELECT  *  FROM  lab_user WHERE  1=1
         <if test="userName != null and  userName !=''">
             AND  user_name=#{userName}
         </if>
