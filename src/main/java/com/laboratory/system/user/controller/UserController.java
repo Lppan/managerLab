@@ -3,7 +3,6 @@ package com.laboratory.system.user.controller;
 import com.laboratory.labport.model.ResponseModel;
 import com.laboratory.system.user.model.User;
 import com.laboratory.system.user.service.UserService;
-import com.laboratory.utils.BaseControllerRequest;
 import com.laboratory.utils.LabConstant;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.map.HashedMap;
