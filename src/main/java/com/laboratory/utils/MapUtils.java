@@ -52,7 +52,7 @@ public class MapUtils {
                                 value = ((Date) value).getTime();
                             }
                             String key=method.substring(3);
-                           String keys =  key.substring(0,1).toLowerCase();
+                            String keys =  key.substring(0,1).toLowerCase();
                             String ss=keys+key.substring(1,key.length());
                             map.put(ss, value);
                         }
