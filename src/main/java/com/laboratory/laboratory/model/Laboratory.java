@@ -6,27 +6,27 @@ public class Laboratory {
 
     private Integer id;
 
-    private Integer labId;
+    private Integer labId;              //实验室id
 
-    private Integer projectId;
+    private Integer projectId;          //项目id
 
-    private String labName;
+    private String labName;             //实验室名称
 
-    private String labFunction;
+    private String labFunction;         //实验室功能
 
-    private String labFunctionM;
+    private String labFunctionM;        //实验室功能备
 
-    private String labPerson;
+    private String labPerson;           //实验人
 
-    private String status;
+    private String status;              //实验室状态
 
-    private String isDelete;
+    private String isDelete;            //是否删除
 
-    private Date beginTime;
+    private Date beginTime;             //实验开始时间
 
-    private Date endTime;
+    private Date endTime;               //实验结束时间
 
-    private String memo;
+    private String memo;                //备注
 
     public Integer getId() {
         return id;

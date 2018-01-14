@@ -170,4 +170,43 @@
       memo = #{memo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <update id="updateStatus" parameterType="java.util.Map">
+    UPDATE lab_laboratory
+    SET
+    status = #{status,jdbcType=VARCHAR}
+    WHERE  id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectLaboratoryAllByPage" parameterType="java.util.Map" resultType="laboratory">
+    SELECT * FROM  lab_laboratory WHERE  1=1
+    <if test="labName != null and labName !=''">
+      AND lab_name = #{labName},
+    </if>
+    <if test="status != null and status !=''">
+      AND status = #{status}
+    </if>
+    <if test="pageStart!=null and pageSize!=null">
+      limit #{pageStart}, #{pageSize}
+    </if>
+    <if test="pageStart==null or pageSize==null">
+      limit 0, 10
+    </if>
+
+  </select>
+
+  <select id="selectLaboratoryCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM  lab_laboratory WHERE  1=1
+    <if test="labName != null and labName !=''">
+      AND lab_name = #{labName},
+    </if>
+    <if test="status != null and status !=''">
+      AND status = #{status}
+    </if>
+    <if test="pageStart!=null and pageSize!=null">
+      limit #{pageStart}, #{pageSize}
+    </if>
+    <if test="pageStart==null or pageSize==null">
+      limit 0, 10
+    </if>
+  </select>
 </mapper>
