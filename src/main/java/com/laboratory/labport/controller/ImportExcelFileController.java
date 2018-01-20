@@ -38,7 +38,7 @@ public class ImportExcelFileController {
                 type = requestMap.get("type").toString();
             }
             //上穿文件
-            ResponseModel responseModel = loadFileService.uploadFile(file, type);
+            ResponseModel responseModel = loadFileService.uploadFile(file, requestMap);
             String path = (String)responseModel.getData();
             //读取文件 并将数据保存到数据库
             importExcelFileService.readExcelFileOne(path);

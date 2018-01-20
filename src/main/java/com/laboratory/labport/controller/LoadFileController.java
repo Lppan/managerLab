@@ -47,11 +47,7 @@ public class LoadFileController {
         //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
        // Map<String,Object> requestMap = JSONObject.fromObject(jsonParams);
         Map<String, String> requestMap = BaseControllerRequest.getMapParams(request);
-        String type = null;
-        if(null != requestMap &&  requestMap.containsKey("type")){
-            type = requestMap.get("type").toString();
-        }
-        ResponseModel responseModel = loadFileService.uploadFile(file, type);
+        ResponseModel responseModel = loadFileService.uploadFile(file, requestMap);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
         return jsonObject.toString();
     }
@@ -65,7 +61,8 @@ public class LoadFileController {
     @RequestMapping(value  = "/multUploadFile" , method= RequestMethod.POST)
     @ResponseBody
     public String MultUploadFile(HttpServletRequest request, MultipartHttpServletRequest files){
-        ResponseModel responseModel = loadFileService.multUploadFile(files);
+        Map<String, String> requestMap = BaseControllerRequest.getMapParams(request);
+        ResponseModel responseModel = loadFileService.multUploadFile(files,requestMap);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
         return jsonObject.toString();
     }

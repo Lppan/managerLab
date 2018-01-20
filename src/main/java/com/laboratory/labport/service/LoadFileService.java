@@ -25,16 +25,17 @@ public class LoadFileService {
 
     private Logger logger = Logger.getLogger(LoadFileService.class);
 
-    public ResponseModel uploadFile(MultipartFile file,String type){
+    public ResponseModel uploadFile(MultipartFile file,Map<String,String> fileMap){
+
         ResponseModel responseModel = new ResponseModel();
         logger.info("上传文件名："+file.getOriginalFilename());
-        String directory = PathUtils.checkDirectory(type);
+        String directory = PathUtils.checkDirectory(fileMap);
         try {
             FileUtils.copyInputStreamToFile(file.getInputStream(),new File(directory,file.getOriginalFilename()));
             //上传成功，返回路径
             responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
             responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
-            responseModel.setData(directory+"/"+file.getOriginalFilename());
+            responseModel.setData(directory+file.getOriginalFilename());
         } catch (IOException e) {
             responseModel.setStatus(LabConstant.operateModel.OPERATE_FAILED_STATUS);
             responseModel.setMessage(LabConstant.operateModel.OPERATE_FAILED_MESSAGE);
@@ -43,11 +44,11 @@ public class LoadFileService {
         }
         return responseModel;
     }
-    public ResponseModel  multUploadFile(MultipartHttpServletRequest files) {
+    public ResponseModel  multUploadFile(MultipartHttpServletRequest files,Map<String,String> filesMap) {
         ResponseModel responseModel = new ResponseModel();          //返回模型
         Map<String, MultipartFile> fileMap = files.getFileMap();          //接受的文件
         Map<String,String> resultMap= new HashMap<String, String>();    //返回
-        String directory = PathUtils.checkDirectory("");
+        String directory = PathUtils.checkDirectory(filesMap);
         for (Map.Entry<String,MultipartFile> file:fileMap.entrySet()){
             MultipartFile fileValue = file.getValue();                              //上传文件
             String filename = fileValue.getOriginalFilename();              //文件名 (带后缀)

@@ -174,4 +174,34 @@
       memo = #{memo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getDebugCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(1) FROM  lab_stoppage WHERE 1=1
+    <if test="bugType != null and bugType !=''">
+        AND bug_type = #{bugType}
+    </if>
+    <if test="bugDetail != null and bugDetail !=''">
+          AND  bug_detail LIKE CONCAT('%',#{bugDetail},'%')
+    </if>
+  </select>
+
+  <select id="showList" parameterType="java.util.Map" resultType="stopPage">
+    SELECT * FROM  lab_stoppage WHERE  1=1
+    <if test="bugType != null and bugType !=''">
+      AND bug_type = #{bugType}
+    </if>
+    <if test="bugDetail != null and bugDetail !=''">
+      AND  bug_detail LIKE CONCAT('%',#{bugDetail},'%')
+    </if>
+    ORDER  BY create_time desc
+    <if test="pageStart!=null and pageSize!=null">
+      limit #{pageStart}, #{pageSize}
+    </if>
+    <if test="pageStart==null or pageSize==null">
+      limit 0, 10
+    </if>
+
+  </select>
+
+
+
 </mapper>

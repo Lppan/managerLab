@@ -8,11 +8,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -21,7 +17,7 @@ import java.util.Map;
  * usercontroller
  * Created by Lpan on 2017/12/22.
  */
-@Controller
+@RestController
 @RequestMapping("/system/user")
 public class UserController {
 
@@ -29,7 +25,6 @@ public class UserController {
     @Autowired
     private UserService userService;
     @RequestMapping(value = "/addUser" ,method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
-    @ResponseBody
     public String addUser(HttpServletRequest request, @RequestBody User user){
         //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         //Map<String,Object> userMap = JSONObject.fromObject(jsonParams);
@@ -43,7 +38,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "/selectUserById" , produces = "text/html;charset=UTF-8")
-    @ResponseBody
     public String selectUserById(HttpServletRequest request,@RequestBody Integer id){
 //       JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
 //       Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
@@ -55,7 +49,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "/deleteById" , produces = "text/html;charset=UTF-8")
-    @ResponseBody
     public String deleteById(HttpServletRequest request,@RequestBody Integer id){
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
 //        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
@@ -67,7 +60,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "/updateUser",produces = "text/html;charset=UTF-8")
-    @ResponseBody
     public String updateUserById(HttpServletRequest request,@RequestBody User user){
         ResponseModel responseModel = new ResponseModel();
 //      JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
@@ -80,7 +72,6 @@ public class UserController {
     }
 
     @RequestMapping("/updateStatus")
-    @ResponseBody
     public String updateStatus(HttpServletRequest request,String id){
         ResponseModel responseModel = userService.updateStatus(id);
         JSONObject object = JSONObject.fromObject(responseModel);
@@ -88,7 +79,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "/getUserList",produces = "text/html;charset=UTF-8")
-    @ResponseBody
     public String selectAllByPage(HttpServletRequest request,@RequestBody Map<String,Object> paramMap){
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
 //        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);

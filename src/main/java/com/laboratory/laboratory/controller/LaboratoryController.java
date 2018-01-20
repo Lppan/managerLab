@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -17,6 +17,7 @@ import java.util.Map;
  *
  * Created by shipan on 2018/1/8.
  */
+@RestController
 @RequestMapping(value = "/laboratory",produces = "application/json;charset=UTF-8")
 public class LaboratoryController {
 
@@ -25,7 +26,6 @@ public class LaboratoryController {
     private LaboratoryService laboratoryService;
 
     @RequestMapping("/showLabList")
-    @ResponseBody
     public String ShowLabList(HttpServletRequest request,Map<String,Object> paramMap){
         ResponseModel responseModel = laboratoryService.selectLaboratoryAllByPage(paramMap, request);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
@@ -33,7 +33,6 @@ public class LaboratoryController {
     }
 
     @RequestMapping("addLaboratory")
-    @ResponseBody
     public String addLaboratory(HttpServletRequest request, @RequestBody Laboratory laboratory){
         ResponseModel responseModel = laboratoryService.insertSelective(laboratory);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
@@ -41,7 +40,6 @@ public class LaboratoryController {
     }
 
     @RequestMapping("/updateLaboratory")
-    @ResponseBody
     public String updateLaboratory(HttpServletRequest request,@RequestBody Laboratory laboratory){
         ResponseModel responseModel = laboratoryService.updateByPrimaryKeySelective(laboratory);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
@@ -49,7 +47,6 @@ public class LaboratoryController {
     }
 
     @RequestMapping("/updateStatusUp")
-    @ResponseBody
     public String updateStatusUp(HttpServletRequest request,@RequestBody Integer id){
         ResponseModel responseModel = laboratoryService.updateStatusUp(id);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
@@ -57,7 +54,6 @@ public class LaboratoryController {
     }
 
     @RequestMapping("/updateStatusDown")
-    @ResponseBody
     public String updateStatusDown(HttpServletRequest request,@RequestBody Integer id){
         ResponseModel responseModel = laboratoryService.updateStatusDown(id);
         JSONObject jsonObject = JSONObject.fromObject(responseModel);

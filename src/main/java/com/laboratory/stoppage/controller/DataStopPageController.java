@@ -3,13 +3,11 @@ package com.laboratory.stoppage.controller;
 import com.laboratory.labport.model.ResponseModel;
 import com.laboratory.stoppage.service.DataStopPageService;
 import com.laboratory.utils.BaseControllerRequest;
-import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -17,7 +15,7 @@ import java.util.Map;
 /**
  * Created by shipan on 2017/12/29.
  */
-@Controller
+@RestController
 @RequestMapping("/dataStopPage")
 public class DataStopPageController {
 
@@ -27,7 +25,6 @@ public class DataStopPageController {
     private DataStopPageService dataStopPageService;
 
     @RequestMapping("/addDataStopPage")
-    @ResponseBody
     public String addDataStopPage(HttpServletRequest request){
         JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         Map<String,Object> dataStopPageMap = JSONObject.fromObject(jsonParams);
@@ -37,7 +34,6 @@ public class DataStopPageController {
     }
 
     @RequestMapping("/deleteDataById")
-    @ResponseBody
     public String deleteDataById(HttpServletRequest request){
         JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         Map<String,Object> dataStopPageMap = JSONObject.fromObject(jsonParams);
@@ -47,7 +43,6 @@ public class DataStopPageController {
     }
 
     @RequestMapping("/selectDataById")
-    @ResponseBody
     public String selectDataStopPageById(HttpServletRequest request){
         JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         Map<String,Object> dataStopPageMap = JSONObject.fromObject(jsonParams);
@@ -57,7 +52,6 @@ public class DataStopPageController {
     }
 
     @RequestMapping("/updateDataById")
-    @ResponseBody
     public String updateDataStopPage(HttpServletRequest request){
         JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         Map<String,Object> dataStopPageMap = JSONObject.fromObject(jsonParams);
@@ -67,7 +61,6 @@ public class DataStopPageController {
     }
 
     @RequestMapping("/debugType")
-    @ResponseBody
     public String showDebugType(HttpServletRequest request){
         ResponseModel responseModel = dataStopPageService.getDebugType();
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
@@ -75,7 +68,6 @@ public class DataStopPageController {
     }
 
     @RequestMapping("/debugInfoByType")
-    @ResponseBody
     public String getDebugInfoByType(HttpServletRequest request){
         JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         Map<String,Object> dataStopPageMap = JSONObject.fromObject(jsonParams);

@@ -3,15 +3,14 @@ package com.laboratory.project.controller;
 import com.laboratory.labport.model.ResponseModel;
 import com.laboratory.project.model.ProjectInfo;
 import com.laboratory.project.service.ProjectInfoService;
-import com.laboratory.utils.BaseControllerRequest;
 import com.laboratory.utils.LabConstant;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -24,7 +23,7 @@ import java.util.Map;
  *
  * Created by shipan on 2017/12/28.
  */
-@Controller
+@RestController
 @RequestMapping(value = "/projectInfo",produces = "application/json;charset=UTF-8")
 public class ProjectInfoController {
 
@@ -33,7 +32,6 @@ public class ProjectInfoController {
     @Autowired
     private ProjectInfoService projectInfoService;
     @RequestMapping("/projectList")
-    @ResponseBody
     public String showListProject(HttpServletRequest request, @RequestBody Map<String,Object> projectMap){
         //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         //Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
@@ -44,7 +42,6 @@ public class ProjectInfoController {
     }
 
     @RequestMapping("/addProjectInfo")
-    @ResponseBody
     public String addProjectInfo(HttpServletRequest request, @RequestBody ProjectInfo projectInfo){
         //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         //Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
@@ -54,7 +51,6 @@ public class ProjectInfoController {
         return jsonObject.toString();
     }
     @RequestMapping("/selectById")
-    @ResponseBody
     public String selectProjectById(HttpServletRequest request,@RequestBody Integer id){
         ResponseModel responseModel = new ResponseModel();
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
@@ -72,7 +68,6 @@ public class ProjectInfoController {
     }
 
     @RequestMapping("/deleteProjectById")
-    @ResponseBody
     public String deleteProjectById(HttpServletRequest request,@RequestBody Integer id){
         ResponseModel responseModel = new ResponseModel();
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
@@ -90,7 +85,6 @@ public class ProjectInfoController {
     }
 
     @RequestMapping("/updateProject")
-    @ResponseBody
     public String updateProject(HttpServletRequest request,@RequestBody ProjectInfo projectInfo){
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
 //        Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
@@ -101,7 +95,6 @@ public class ProjectInfoController {
     }
 
     @RequestMapping("/pass")
-    @ResponseBody
     public String setProjectStatus(HttpServletRequest request,@RequestBody Map<String,Object> projectMap){
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
 //        Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
@@ -111,7 +104,6 @@ public class ProjectInfoController {
     }
 
     @RequestMapping("/back")
-    @ResponseBody
     public String setProjectStatusBack(HttpServletRequest request,@RequestBody Map<String,Object> projectMap){
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
 //        Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);

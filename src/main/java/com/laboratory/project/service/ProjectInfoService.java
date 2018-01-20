@@ -6,6 +6,8 @@ import com.laboratory.project.model.ProjectInfo;
 import com.laboratory.utils.LabConstant;
 import com.laboratory.utils.MapUtils;
 import com.laboratory.utils.PageUtils;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,9 +38,7 @@ public class ProjectInfoService {
             paramMap.put("count",pageCount);
             List<ProjectInfo> projectInfoList = projectInfoMapper.selectProjectAllByPage(PageUtils.Page(request,paramMap));
             logger.info("查询结果："+projectInfoList.toString());
-            Map<String,Object> pageMap = new HashMap<String,Object>();
-            //pageMap.put("count",pageCount);
-            PageUtils.calculate(pageMap);
+            PageUtils.calculate(paramMap);
             List<Map<String,Object>> mapList = new ArrayList<Map<String,Object>>();
             for (ProjectInfo projectInfo:projectInfoList){
                 paramMap = MapUtils.getValue(projectInfo);
@@ -47,8 +47,8 @@ public class ProjectInfoService {
             if (null != projectInfoList && projectInfoList.size() > 0){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
-                responseModel.setData(mapList);
-                responseModel.setPageMap(pageMap);
+                responseModel.setData(JSONArray.fromObject(projectInfoList));
+                responseModel.setPageMap(paramMap);
             }else{
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MESSAGE);

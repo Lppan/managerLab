@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.Map;
 /**
  * Created by shipan on 2018/1/1.
  */
-@Controller
+@RestController
 @RequestMapping(value = "/data",produces = "application/json;charset=UTF-8")
 public class DataInfoController {
 
@@ -26,7 +27,6 @@ public class DataInfoController {
     private DataInfoService dataInfoService;
 
     @RequestMapping("/addDataInfo")
-    @ResponseBody
     public String addDataInfo(HttpServletRequest request){
         JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         Map<String,Object> datatMap = JSONObject.fromObject(jsonParams);
@@ -42,7 +42,6 @@ public class DataInfoController {
      * @return
      */
     @RequestMapping("/selectDataDictionary")
-    @ResponseBody
     public String selectDataDictionary(HttpServletRequest request){
         JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         Map<String,Object> datatMap = JSONObject.fromObject(jsonParams);

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Map;
  * role controller
  * Created by Lpan on 2017/12/21.
  */
-@Controller
+@RestController
 @RequestMapping("/system/role")
 public class RoleController {
     @Autowired
@@ -26,7 +27,6 @@ public class RoleController {
      * @param model
      */
     @RequestMapping("/add")
-    @ResponseBody
     public void insert(Role model){
          roleService.insert(model);
     }
