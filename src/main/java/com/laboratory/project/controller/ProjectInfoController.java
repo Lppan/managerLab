@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +30,7 @@ public class ProjectInfoController {
 
     @Autowired
     private ProjectInfoService projectInfoService;
-    @RequestMapping("/projectList")
+    @RequestMapping("/list")
     public String showListProject(HttpServletRequest request, @RequestBody Map<String,Object> projectMap){
         //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         //Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
@@ -41,7 +40,7 @@ public class ProjectInfoController {
         return jsonObject.toString();
     }
 
-    @RequestMapping("/addProjectInfo")
+    @RequestMapping("/add")
     public String addProjectInfo(HttpServletRequest request, @RequestBody ProjectInfo projectInfo){
         //JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
         //Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
@@ -50,41 +49,40 @@ public class ProjectInfoController {
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
         return jsonObject.toString();
     }
-    @RequestMapping("/selectById")
-    public String selectProjectById(HttpServletRequest request,@RequestBody Integer id){
-        ResponseModel responseModel = new ResponseModel();
-//        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
-//        Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
-//        if(null != projectMap && projectMap.containsKey("id")){
-//            Integer id = Integer.valueOf(projectMap.get("id").toString());
-            logger.info("根据id查询项目，id:"+id);
-            responseModel = projectInfoService.selectByPrimaryKey(id);
-//        }else{
-            responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
-            responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+":id不能为空");
-//        }
-        JSONObject jsonObject = JSONObject.fromObject(responseModel);
-        return jsonObject.toString();
-    }
 
-    @RequestMapping("/deleteProjectById")
-    public String deleteProjectById(HttpServletRequest request,@RequestBody Integer id){
+    @RequestMapping("/detail")
+    public String selectProjectById(HttpServletRequest request, @RequestBody Map<String,Object> projectMap) {
+        ResponseModel responseModel = new ResponseModel();
+        if (null != projectMap && projectMap.containsKey("id")) {
+            Integer id = Integer.valueOf(projectMap.get("id").toString());
+            logger.info("根据id查询项目，id:" + id);
+            responseModel = projectInfoService.selectByPrimaryKey(id);
+        }else{
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE + ":id不能为空");
+      }
+            JSONObject jsonObject = JSONObject.fromObject(responseModel);
+            return jsonObject.toString();
+     }
+
+    @RequestMapping("/delete")
+    public String deleteProjectById(HttpServletRequest request,@RequestBody Map<String,Object> projectMap){
         ResponseModel responseModel = new ResponseModel();
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
 //        Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
-//        if(null != projectMap && projectMap.containsKey("id")){
-//            Integer id = Integer.valueOf(projectMap.get("id").toString());
+        if(null != projectMap && projectMap.containsKey("id")){
+            Integer id = Integer.valueOf(projectMap.get("id").toString());
             logger.info("根据id删除项目：id"+id);
             responseModel = projectInfoService.deleteByPrimaryKey(id);
-//        }else{
+        }else{
             responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
             responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE+"id不能为空");
-//        }
+        }
         JSONObject jsonObject = JSONObject.fromObject(responseModel);
         return jsonObject.toString();
     }
 
-    @RequestMapping("/updateProject")
+    @RequestMapping("/update")
     public String updateProject(HttpServletRequest request,@RequestBody ProjectInfo projectInfo){
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
 //        Map<String,Object> projectMap = JSONObject.fromObject(jsonParams);
