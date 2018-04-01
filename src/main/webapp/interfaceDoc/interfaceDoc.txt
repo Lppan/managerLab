@@ -515,5 +515,32 @@ RESPONSE
 
 }
 
+实验室列表
+
+/laboratory/showLabList
 
 
+
+
+添加实验室
+
+/laboratory/addLaboratory
+
+REQUEST
+{
+  "labId":"123",
+  "projectId":"1234",
+  "labName":"实验室名称",
+  "labFunction":"实验室功能",
+  "labFunctionM":"实验室功能1",
+  "labPerson":"实验人",
+  "status":0,
+  "isDelete":0,
+  "beginTime":123,
+  "endTime":321
+}
+
+
+
+实验室列表接口
+实验内容{排放试验，磨合实验，性能试验}

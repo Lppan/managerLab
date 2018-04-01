@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -79,9 +80,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/getUserList",produces = "text/html;charset=UTF-8")
-    public String selectAllByPage(HttpServletRequest request,@RequestBody Map<String,Object> paramMap){
+    public String selectAllByPage(HttpServletRequest request){
 //        JSONObject jsonParams = BaseControllerRequest.getJSONParams(request);
 //        Map<String,Object> paramMap = JSONObject.fromObject(jsonParams);
+        Map<String,Object> paramMap = new HashMap<String, Object>();
         if (null == paramMap){
             paramMap = new HashedMap();
         }
