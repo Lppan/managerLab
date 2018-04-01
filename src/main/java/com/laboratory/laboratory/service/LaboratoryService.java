@@ -5,6 +5,7 @@ import com.laboratory.laboratory.model.Laboratory;
 import com.laboratory.labport.model.ResponseModel;
 import com.laboratory.utils.LabConstant;
 import com.laboratory.utils.PageUtils;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.Logger;
@@ -40,7 +41,7 @@ public class LaboratoryService {
 
     public ResponseModel insertSelective(Laboratory laboratory){
         ResponseModel responseModel = this.checkLaboratoyMust(laboratory);
-        if ("".equals(responseModel.getStatus())){
+        if (responseModel.getStatus() == LabConstant.operateModel.OPERATE_SUCCESS_STATUS){
             int selective = laboratoryMapper.insertSelective(laboratory);
             if (selective > 0){
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
@@ -54,8 +55,18 @@ public class LaboratoryService {
     }
 
 
-    public Laboratory selectByPrimaryKey(Integer id){
-        return laboratoryMapper.selectByPrimaryKey(id);
+    public ResponseModel selectByPrimaryKey(Integer id){
+        ResponseModel responseModel = new ResponseModel();
+        Laboratory laboratory = laboratoryMapper.selectByPrimaryKey(id);
+        if (null != laboratory){
+            responseModel.setData(JSONObject.fromObject(laboratory));
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
+        }else{
+            responseModel.setStatus(LabConstant.operateModel.OPERATE_FAILED_STATUS);
+            responseModel.setMessage(LabConstant.operateModel.OPERATE_FAILED_MESSAGE);
+        }
+        return responseModel;
     }
 
     public ResponseModel updateByPrimaryKeySelective(Laboratory laboratory){
@@ -84,14 +95,14 @@ public class LaboratoryService {
             paramMap.put("count",count);
             PageUtils.calculate(paramMap);
             List<Laboratory> laboratories = laboratoryMapper.selectLaboratoryAllByPage(PageUtils.Page(request, paramMap));
-            logger.info("查询结果："+laboratories.toString());
             if (null != laboratories && laboratories.size() > 0){
+                logger.info("查询结果："+laboratories.toString());
                 responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
                 responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
-                responseModel.setData(JSONObject.fromObject(laboratories));
+                responseModel.setData(JSONArray.fromObject(laboratories));
             }else{
-                responseModel.setStatus(LabConstant.operateModel.OPERATE_FAILED_STATUS);
-                responseModel.setMessage(LabConstant.operateModel.OPERATE_FAILED_MESSAGE);
+                responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
+                responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MESSAGE);
             }
         }else{
             responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
@@ -118,6 +129,8 @@ public class LaboratoryService {
             responseModel.setStatus(LabConstant.operateModel.OPERATE_EMPTY_STATUS);
             responseModel.setMessage(LabConstant.operateModel.OPERATE_EMPTY_MUST_MESSAGE + "实验室功能不能为空");
         }
+        responseModel.setStatus(LabConstant.operateModel.OPERATE_SUCCESS_STATUS);
+        responseModel.setMessage(LabConstant.operateModel.OPERATE_SUCCESS_MESSAGE);
         return responseModel;
     }
 
